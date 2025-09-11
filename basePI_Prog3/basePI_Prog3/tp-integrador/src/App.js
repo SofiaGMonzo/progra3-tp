@@ -12,6 +12,7 @@ import Series from "./screens/Series/Series";
 import Serie from "./screens/Serie/Serie";
 import Favorites from "./screens/Favorites/Favourites";
 import Results from "./screens/Results/Results";
+import NotFound from "./screens/NotFound/NotFound";
 
 // nav
 import Headers from "./components/Headers";
@@ -27,7 +28,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* Podés borrar el bloque del logo si no lo usás */}
       <header className="App-header" style={{ display: "none" }}>
         <img src={logo} className="App-logo" alt="logo" />
       </header>
@@ -45,6 +45,7 @@ function App() {
             <Route path="/serie/:id" component={Serie} />
             <Route path="/favorites" component={Favorites} />
             <Route path="/results" component={Results} />
+            <Route component={NotFound} />
           </Switch>
 
         
