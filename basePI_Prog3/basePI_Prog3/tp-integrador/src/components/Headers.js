@@ -5,7 +5,11 @@ function Headers({ elementosMenu = [] }) {
   return (
     <ul className="main-nav">
       {elementosMenu.map((item, idx) => (
-        <Header/>
+        <Header
+          key={idx}
+          ruta={item.ruta}
+          nombre={item.nombre}
+        />
       ))}
     </ul>
   );

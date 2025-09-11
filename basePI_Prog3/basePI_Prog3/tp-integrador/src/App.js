@@ -15,6 +15,7 @@ import Results from "./screens/Results/Results";
 
 // nav
 import Headers from "./components/Headers";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const menu = [
@@ -45,7 +46,14 @@ function App() {
             <Route path="/favorites" component={Favorites} />
             <Route path="/results" component={Results} />
           </Switch>
+
+        
+
         </div>
+        <div>
+          <Footer/>
+        </div>
+
       </Router>
     </div>
   );
