@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Movies() {
+function Movies() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
@@ -87,4 +87,6 @@ export default function Movies() {
       </section>
     </div>
   );
-}
+};
+
+export default Movies;

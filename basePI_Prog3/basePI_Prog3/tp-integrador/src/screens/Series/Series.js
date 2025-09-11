@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Series() {
+function Series() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
@@ -79,4 +79,6 @@ export default function Series() {
       </section>
     </div>
   );
-}
+};
+
+export default Series;

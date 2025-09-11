@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Favorites() {
+function Favorites() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
@@ -92,3 +92,5 @@ export default function Favorites() {
     </div>
   );
 }
+
+export default Favorites;

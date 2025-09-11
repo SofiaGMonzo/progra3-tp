@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Results() {
+function Results() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
@@ -91,4 +91,6 @@ export default function Results() {
       </section>
     </div>
   );
-}
+};
+
+export default Results;
