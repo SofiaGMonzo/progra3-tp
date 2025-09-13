@@ -1,4 +1,6 @@
 import React from "react";
+import Headers from "../../components/Headers/Headers";
+import CardSeries from "../../components/CardSeries/CardSeries";
 
 function Series() {
   return (
@@ -7,20 +9,7 @@ function Series() {
 
       {/* Menu */}
       <nav>
-        <ul className="nav nav-tabs my-4">
-          <li className="nav-item">
-            <a className="nav-link" href="index.html">Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="movies.html">Películas</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="series.html">Series</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="favorites.html">Favoritas</a>
-          </li>
-        </ul>
+        <Headers/>
         {/* Buscador */}
         <form className="search-form" action="results.html" method="get">
           <input type="text" name="searchData" placeholder="Buscar..." defaultValue="" />
@@ -33,6 +22,8 @@ function Series() {
         <input type="text" name="filter" id="" placeholder="Buscar dentro de la lista" />
       </form>
       
+      <CardSeries/>
+
       <button className="btn btn-warning">Cargar más</button>
       
       <section className="row cards all-series" id="series">

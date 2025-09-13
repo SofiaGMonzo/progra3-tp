@@ -1,4 +1,7 @@
 import React from "react";
+import Headers from "../../components/Headers/Headers";
+import CardMovies from "../../components/CardMovies/CardMovies";
+
 
 function Movies() {
   return (
@@ -7,20 +10,8 @@ function Movies() {
 
       {/* Menu */}
       <nav>
-        <ul className="nav nav-tabs my-4">
-          <li className="nav-item">
-            <a className="nav-link" href="index.html">Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="movies.html">Películas</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="series.html">Series</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="favorites.html">Favoritas</a>
-          </li>
-        </ul>
+        <Headers/>
+
         {/* Buscador */}
         <form className="search-form" action="results.html" method="get">
           <input type="text" name="searchData" placeholder="Buscar..." defaultValue="" />
@@ -32,6 +23,8 @@ function Movies() {
       <form className="filter-form px-0 mb-3" action="" method="get">
         <input type="text" name="filter" id="" placeholder="Buscar dentro de la lista" />
       </form>
+
+      <CardMovies/>
       
       <button className="btn btn-info">Cargar más</button>
 
