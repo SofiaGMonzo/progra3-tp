@@ -1,4 +1,6 @@
 import React from "react";
+import Headers from "../../components/Headers/Headers";
+import DetalleMovie from "../../components/DetalleMovie/DetalleMovie";
 
 function Movie() {
   return (
@@ -7,27 +9,14 @@ function Movie() {
 
       {/* Menu */}
       <nav>
-        <ul className="nav nav-tabs my-4">
-          <li className="nav-item">
-            <a className="nav-link" href="index.html">Home</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="movies.html">Películas</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="series.html">Series</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" href="favorites.html">Favoritas</a>
-          </li>
-        </ul>
+        <Headers/>
         {/* Buscador */}
         <form className="search-form" action="results.html" method="get">
           <input type="text" name="searchData" placeholder="Buscar..." defaultValue="" />
           <button type="submit" className="btn btn-success btn-sm">Buscar</button>
         </form>
       </nav>
-
+    <DetalleMovie/>
       <h2 className="alert alert-primary">Superman</h2>
       <section className="row">
         <img className="col-md-6" src="https://image.tmdb.org/t/p/w500/ombsmhYUqR4qqOLOxAyr5V8hbyv.jpg" alt="" />

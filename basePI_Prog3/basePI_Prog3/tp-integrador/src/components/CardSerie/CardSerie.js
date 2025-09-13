@@ -52,8 +52,8 @@ class CardSerie extends Component {
 
         <button onClick={() => this.manejarFavorito()}>
           {this.state.esFavorito
-            ? "★ Quitar de favoritos"
-            : "☆ Agregar a favoritos"}
+            ? "Quitar de favoritos"
+            : "Agregar a favoritos"}
         </button>
       </div>
     );

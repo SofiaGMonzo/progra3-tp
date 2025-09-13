@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 class CardMovie extends Component {
   constructor(props) {
     super(props);
-    const favMoviesStored = localStorage.getItem("favMovies");
-    const favMoviesIds = favMoviesStored ? JSON.parse(favMoviesStored) : [];
+    const pelisFav = localStorage.getItem("favMovies");
+    const pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
 
     this.state = {
       verDescripcion: false,
-      esFavorito: favMoviesIds.includes(this.props.movie.id)
+      esFavorito: pelisFavId.includes(this.props.movie.id)
     };
   }
 
@@ -18,18 +18,18 @@ class CardMovie extends Component {
   }
 
   manejarFavorito() {
-    const favMoviesStored = localStorage.getItem("favMovies");
-    let favMoviesIds = favMoviesStored ? JSON.parse(favMoviesStored) : [];
+    const pelisFav = localStorage.getItem("favMovies");
+    let pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
 
     if (this.state.esFavorito) {
-      // quitar
-      favMoviesIds = favMoviesIds.filter((id) => id !== this.props.movie.id);
+    
+      pelisFavId = pelisFavId.filter((id) => id !== this.props.movie.id);
     } else {
-      // agregar
-      favMoviesIds.push(this.props.movie.id);
+ 
+      pelisFavId.push(this.props.movie.id);
     }
 
-    localStorage.setItem("favMovies", JSON.stringify(favMoviesIds));
+    localStorage.setItem("favMovies", JSON.stringify(pelisFavId));
 
     this.setState({ esFavorito: !this.state.esFavorito });
   }
@@ -44,7 +44,7 @@ class CardMovie extends Component {
         />
         <p>{movie.title}</p>
 
-        <Link to={`/movies/${movie.id}`}>Ir a detalle</Link>
+        <Link to={`/movie/${movie.id}`}>Ir a detalle</Link>
 
         <button onClick={() => this.manejarDescripcion()}>
           {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
@@ -54,8 +54,8 @@ class CardMovie extends Component {
 
         <button onClick={() => this.manejarFavorito()}>
           {this.state.esFavorito
-            ? "★ Quitar de favoritos"
-            : "☆ Agregar a favoritos"}
+            ? "Quitar de favoritos"
+            : "Agregar a favoritos"}
         </button>
       </div>
     );
