@@ -21,7 +21,7 @@ function Series() {
             <a className="nav-link" href="favorites.html">Favoritas</a>
           </li>
         </ul>
-        {/* Buscador */}
+        {/* Buscador <*/}
         <form className="search-form" action="results.html" method="get">
           <input type="text" name="searchData" placeholder="Buscar..." defaultValue="" />
           <button type="submit" className="btn btn-success btn-sm">Buscar</button>
