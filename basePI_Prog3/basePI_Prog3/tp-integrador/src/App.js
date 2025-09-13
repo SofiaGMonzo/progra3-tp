@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import logo from "./logo.svg";
 import "./App.css";
 
+
 // screens
 import Index from "./screens/Index/Index";
 import Movies from "./screens/Movies/Movies";
@@ -15,8 +16,9 @@ import Results from "./screens/Results/Results";
 import NotFound from "./screens/NotFound/NotFound";
 
 // nav
-import Headers from "./components/Headers";
+import Headers from "./components/Headers/Headers";
 import Footer from "./components/Footer/Footer";
+import Home from "./components/Home/Home";
 
 function App() {
   const menu = [

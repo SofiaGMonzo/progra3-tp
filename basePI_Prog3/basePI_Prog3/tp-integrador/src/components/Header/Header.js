@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Header.css";
 
 function Header({ ruta, nombre }) {
   return (
-    <li>
+    <li className="nav-item">
       <Link to={ruta} className="nav-link">
         {nombre}
       </Link>

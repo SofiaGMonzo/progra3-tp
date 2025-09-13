@@ -1,5 +1,8 @@
 import React from "react";
-import Headers from "../../components/Headers";
+import Headers from "../../components/Headers/Headers";
+import Home from "../../components/Home/Home";
+
+
 
 function Index() {
   return (
@@ -18,6 +21,8 @@ function Index() {
           <button type="submit" className="btn btn-success btn-sm">Buscar</button>
         </form>
       </nav>
+
+      <Home/>
 
       <h2 className="alert alert-primary">Popular movies this week</h2>
       <section className="row cards" id="movies">

@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "./Header/Header";
+import Header from "../Header/Header";
 
 function Headers({ elementosMenu = [] }) {
   return (
-    <ul className="main-nav">
+    <ul className="nav nav-tabs my-4">
       {elementosMenu.map((item, idx) => (
         <Header
           key={idx}
