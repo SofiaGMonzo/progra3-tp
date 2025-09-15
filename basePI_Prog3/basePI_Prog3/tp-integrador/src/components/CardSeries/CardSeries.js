@@ -60,15 +60,12 @@ class CardSeries extends Component {
           />
         </form>
 
-        <Link to="/movies">Ver todas</Link>
-
         <h2>Series top rated</h2>
         <div className="grupo">
           {this.state.topSeriesFiltradas.map((serie, idx) =>
             idx < 10 ? <CardSerie key={serie.id} serie={serie} /> : null
           )}
         </div>
-        <Link to="/series">Ver todas</Link>
       </main>
     );
   }

@@ -69,7 +69,7 @@ class CardMovies extends Component {
               return null;
             })}
         </div>
-        <Link to="/movies">Ver todas</Link>
+        
       </main>
     );
   }
