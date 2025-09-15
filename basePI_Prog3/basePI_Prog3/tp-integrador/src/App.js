@@ -11,7 +11,7 @@ import Movies from "./screens/Movies/Movies";
 import Movie from "./screens/Movie/Movie";
 import Series from "./screens/Series/Series";
 import Serie from "./screens/Serie/Serie";
-import Favorites from "./screens/Favorites/Favourites";
+import Favourites from "./screens/Favorites/Favourites";
 import Results from "./screens/Results/Results";
 import NotFound from "./screens/NotFound/NotFound";
 
@@ -21,6 +21,7 @@ import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
 import DetalleMovie from "./components/DetalleMovie/DetalleMovie"
 import DetalleSerie from "./components/DetalleSerie/DetalleSerie"
+import Favorites from "./components/Favorites/Favorites";
 
 function App() {
   const menu = [
