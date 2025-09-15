@@ -19,21 +19,17 @@ class CardMovies extends Component {
   }
 
   controlarCambios(event) {
-    this.setState({ valor: event.target.value }, () =>
-      this.filtro(this.state.valor)
-    );
+    this.setState({ valor: event.target.value }, () => this.filtro(this.state.valor));
   }
 
   filtro(texto) {
-    if (!texto) {
+    if (texto === "") {
       this.setState({ topMoviesFiltradas: this.state.topMovies });
       return;
     }
 
-    const q = texto.toLowerCase();
     const arrayPeliculas = this.state.topMovies.filter((elemento) => {
-      if (!elemento || !elemento.title) return false;
-      return elemento.title.toLowerCase().includes(q);
+      return elemento.title && elemento.title.toLowerCase().includes(texto.toLowerCase());
     });
 
     this.setState({
@@ -42,15 +38,12 @@ class CardMovies extends Component {
   }
 
   componentDidMount() {
-    fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?api_key=e017b082fb716585e3bd1e8377157925"
-    )
+    fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=e017b082fb716585e3bd1e8377157925")
       .then((res) => res.json())
       .then((data) => {
-        const lista = Array.isArray(data.results) ? data.results : [];
         this.setState({
-          topMovies: lista,
-          topMoviesFiltradas: lista
+          topMovies: data.results,
+          topMoviesFiltradas: data.results
         });
       })
       .catch((error) => console.log(error));
@@ -69,9 +62,12 @@ class CardMovies extends Component {
 
         <h2>Películas top rated</h2>
         <div className="grupo">
-          {this.state.topMoviesFiltradas.map((movie, idx) =>
-            idx < 10 ? <CardMovie key={movie.id} movie={movie} /> : null
-          )}
+          {this.state.topMoviesFiltradas && this.state.topMoviesFiltradas.map((movie, idx) => {
+              if (idx < 10) {
+                return <CardMovie key={movie.id} movie={movie} />;
+              }
+              return null;
+            })}
         </div>
         <Link to="/movies">Ver todas</Link>
       </main>

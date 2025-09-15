@@ -27,8 +27,7 @@ class CardSeries extends Component {
   filtro(texto) {
     let arraySeries = this.state.topSeries.filter(
       (elemento) =>
-        elemento.name &&
-        elemento.name.toLowerCase().includes(texto.toLowerCase())
+        elemento.name &&  elemento.name.toLowerCase().includes(texto.toLowerCase())
     );
 
     this.setState({
