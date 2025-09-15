@@ -10,7 +10,8 @@ class CardSeries extends Component {
       topSeries: [],           
       search: "",
       valor: "",
-      topSeriesFiltradas: []    
+      topSeriesFiltradas: [],
+      next: 1    
     };
   }
 
@@ -43,7 +44,23 @@ class CardSeries extends Component {
       .then((data) => {
         this.setState({
           topSeries: data.results,
-          topSeriesFiltradas: data.results
+          topSeriesFiltradas: data.results,
+          next: data.page + 1
+        });
+      })
+      .catch((error) => console.log(error));
+  }
+
+  cargarMas(){
+      fetch(
+      `https://api.themoviedb.org/3/tv/top_rated?page=${this.state.next} &api_key=e017b082fb716585e3bd1e8377157925`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          topSeries: this.state.topSeries.concat(data.results),
+          topSeriesFiltradas: this.state.topSeriesFiltradas.concat(data.results),
+          next: data.page + 1
         });
       })
       .catch((error) => console.log(error));
@@ -63,9 +80,13 @@ class CardSeries extends Component {
         <h2>Series top rated</h2>
         <div className="grupo">
           {this.state.topSeriesFiltradas.map((serie, idx) =>
-            idx < 10 ? <CardSerie key={serie.id} serie={serie} /> : null
+            <CardSerie key={serie.id} serie={serie} />
           )}
         </div>
+
+          <button onClick={()=> this.cargarMas()} className="btn btn-info">Cargar más</button>
+
+
       </main>
     );
   }

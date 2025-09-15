@@ -16,8 +16,7 @@ function Movies() {
       </form>
 
       <CardMovies/>
-      
-      <button className="btn btn-info">Cargar más</button>
+    
     </div>
   );
 };

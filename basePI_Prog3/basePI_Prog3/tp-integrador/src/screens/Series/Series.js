@@ -14,8 +14,6 @@ function Series() {
       
       <CardSeries/>
 
-      <button className="btn btn-warning">Cargar más</button>
-
     </div>
   );
 };
