@@ -1,15 +1,15 @@
 import React from "react";
 import Headers from "../../components/Headers/Headers";
+import DetalleSerie from "../../components/DetalleSerie/DetalleSerie";
 
 function Serie() {
   return (
     <div className="container">
-      <h1>UdeSA Movies</h1>
 
-      {/* Menu */}
      ;
      <Headers/>
-
+  
+  <DetalleSerie/>
       
     </div>
   );

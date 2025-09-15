@@ -19,6 +19,8 @@ import NotFound from "./screens/NotFound/NotFound";
 import Headers from "./components/Headers/Headers";
 import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
+import DetalleMovie from "./components/DetalleMovie/DetalleMovie"
+import DetalleSerie from "./components/DetalleSerie/DetalleSerie"
 
 function App() {
   const menu = [
@@ -42,12 +44,13 @@ function App() {
           <Switch>
             <Route exact path="/" component={Index} />
             <Route path="/movies" component={Movies} />
-            <Route path="/movie/:id" component={Movie} />
+            <Route path="/movie/:id" component={DetalleMovie} />
             <Route path="/series" component={Series} />
-            <Route path="/serie/:id" component={Serie} />
+            <Route path="/serie/:id" component={DetalleSerie} />
             <Route path="/favorites" component={Favorites} />
             <Route path="/results" component={Results} />
             <Route component={NotFound} />
+            
           </Switch>
 
         

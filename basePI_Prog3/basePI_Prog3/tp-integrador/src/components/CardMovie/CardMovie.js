@@ -35,22 +35,22 @@ class CardMovie extends Component {
   }
 
   render() {
-    const { movie } = this.props;
+    
     return (
       <div className="card">
         <img
-          src={"https://image.tmdb.org/t/p/w200" + movie.poster_path}
-          alt={movie.title}
+          src={"https://image.tmdb.org/t/p/w200" + this.props.movie.poster_path}
+          alt={this.props.movie.title}
         />
-        <p>{movie.title}</p>
+        <p>{this.props.movie.title}</p>
 
-        <Link to={`/movie/${movie.id}`}>Ir a detalle</Link>
+        <Link to={`/movie/${this.props.movie.id}`}>Ir a detalle</Link>
 
         <button onClick={() => this.manejarDescripcion()}>
           {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
         </button>
 
-        {this.state.verDescripcion ? <p>{movie.overview}</p> : null}
+        {this.state.verDescripcion ? <p>{this.props.movie.overview}</p> : null}
 
         <button onClick={() => this.manejarFavorito()}>
           {this.state.esFavorito
