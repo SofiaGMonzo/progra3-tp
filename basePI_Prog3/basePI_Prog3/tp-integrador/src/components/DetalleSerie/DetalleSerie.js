@@ -74,7 +74,7 @@ class DetalleSerie extends Component {
         </ul>
 
         <button onClick={() => this.manejarFavorito()}>
-          {esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
+          {esFavorito ? "☆ Quitar de favoritos" : " ✮⋆˙ Agregar a favoritos"}
         </button>
       </div>
     );
