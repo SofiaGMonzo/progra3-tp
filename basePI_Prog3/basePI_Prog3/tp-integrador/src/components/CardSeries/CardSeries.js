@@ -1,45 +1,32 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import CardSerie from "../CardSerie/CardSerie";
 
 class CardSeries extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyImages: [],
-      topSeries: [],           
-      search: "",
+      topSeries: [],
       valor: "",
       topSeriesFiltradas: [],
-      next: 1    
+      next: 1
     };
   }
 
-  evitarSubmit(event) {
-    event.preventDefault();
-  }
+  evitarSubmit(event) { event.preventDefault(); }
 
   controlarCambios(event) {
-    this.setState({ valor: event.target.value }, () =>
-      this.filtro(this.state.valor)
-    );
+    this.setState({ valor: event.target.value }, () => this.filtro(this.state.valor));
   }
 
   filtro(texto) {
-    let arraySeries = this.state.topSeries.filter(
-      (elemento) =>
-        elemento.name &&  elemento.name.toLowerCase().includes(texto.toLowerCase())
+    const arraySeries = this.state.topSeries.filter(
+      (e) => e.name && e.name.toLowerCase().includes(texto.toLowerCase())
     );
-
-    this.setState({
-      topSeriesFiltradas: arraySeries
-    });
+    this.setState({ topSeriesFiltradas: arraySeries });
   }
 
   componentDidMount() {
-    fetch(
-      "https://api.themoviedb.org/3/tv/top_rated?api_key=e017b082fb716585e3bd1e8377157925"
-    )
+    fetch("https://api.themoviedb.org/3/tv/top_rated?api_key=e017b082fb716585e3bd1e8377157925")
       .then((res) => res.json())
       .then((data) => {
         this.setState({
@@ -51,10 +38,8 @@ class CardSeries extends Component {
       .catch((error) => console.log(error));
   }
 
-  cargarMas(){
-      fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?page=${this.state.next} &api_key=e017b082fb716585e3bd1e8377157925`
-    )
+  cargarMas() {
+    fetch(`https://api.themoviedb.org/3/tv/top_rated?page=${this.state.next}&api_key=e017b082fb716585e3bd1e8377157925`)
       .then((res) => res.json())
       .then((data) => {
         this.setState({
@@ -68,25 +53,28 @@ class CardSeries extends Component {
 
   render() {
     return (
-      <main>
-        <form onSubmit={(event) => this.evitarSubmit(event)}>
+      <main className="seccion">
+        <form className="search-form buscador-form" onSubmit={(e) => this.evitarSubmit(e)}>
           <input
+            className="buscador-input"
             type="text"
             placeholder="Buscar..."
-            onChange={(event) => this.controlarCambios(event)}
+            onChange={(e) => this.controlarCambios(e)}
           />
         </form>
 
-        <h2>Series top rated</h2>
-        <div className="grupo">
-          {this.state.topSeriesFiltradas.map((serie, idx) =>
+        <h2 className="seccion-titulo">Series top rated</h2>
+        <div className="cards grupo listado-cards">
+          {this.state.topSeriesFiltradas.map((serie) => (
             <CardSerie key={serie.id} serie={serie} />
-          )}
+          ))}
         </div>
 
-          <button onClick={()=> this.cargarMas()} className="btn btn-info">Cargar más</button>
-
-
+        <div className="seccion acciones-listado">
+          <button onClick={() => this.cargarMas()} className="boton boton-info boton-cargar">
+            Cargar más
+          </button>
+        </div>
       </main>
     );
   }

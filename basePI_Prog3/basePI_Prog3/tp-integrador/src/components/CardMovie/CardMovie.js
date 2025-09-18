@@ -18,45 +18,56 @@ class CardMovie extends Component {
   }
 
   manejarFavorito() {
-    const pelisFav = localStorage.getItem("favMovies");
-    let pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
+  const pelisFav = localStorage.getItem("favMovies");
+  let pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
 
-    if (this.state.esFavorito) {
-    
-      pelisFavId = pelisFavId.filter((id) => id !== this.props.movie.id);
-    } else {
- 
+  if (this.state.esFavorito) {
+    pelisFavId = pelisFavId.filter(id => id !== this.props.movie.id);
+  } else {
+    if (!pelisFavId.includes(this.props.movie.id)) {
       pelisFavId.push(this.props.movie.id);
     }
-
-    localStorage.setItem("favMovies", JSON.stringify(pelisFavId));
-
-    this.setState({ esFavorito: !this.state.esFavorito });
   }
 
+  localStorage.setItem("favMovies", JSON.stringify(pelisFavId));
+  this.setState({ esFavorito: !this.state.esFavorito });
+}
+
+
   render() {
-    
+    const { movie } = this.props;
+
     return (
       <div className="card">
-        <img
-          src={"https://image.tmdb.org/t/p/w200" + this.props.movie.poster_path}
-          alt={this.props.movie.title}
-        />
-        <p>{this.props.movie.title}</p>
+        <div className="cardd">
+          <img
+            className="card-img"
+            src={"https://image.tmdb.org/t/p/w200" + movie.poster_path}
+            alt={movie.title}
+          />
+        </div>
 
-        <Link to={`/movie/${this.props.movie.id}`}>Ir a detalle</Link>
+        <div className="card-overlay">
+          <h3 className="card-titulo">{movie.title}</h3>
 
-        <button onClick={() => this.manejarDescripcion()}>
-          {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
-        </button>
+          <div className="cardactiva">
+            <Link to={`/movie/${movie.id}`} className="boton boton-detalle">
+              Ir a detalle
+            </Link>
 
-        {this.state.verDescripcion ? <p>{this.props.movie.overview}</p> : null}
+            <button onClick={() => this.manejarDescripcion()} className="boton botoncosa">
+              {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
+            </button>
 
-        <button onClick={() => this.manejarFavorito()}>
-          {this.state.esFavorito
-            ? "☆ Quitar de favoritos"
-            : " ✮⋆˙ Agregar a favoritos"}
-        </button>
+            <button onClick={() => this.manejarFavorito()} className="boton boton-favorito">
+              {this.state.esFavorito ? "☆ Quitar de favoritos" : "✮⋆˙ Agregar a favoritos"}
+            </button>
+          </div>
+
+          {this.state.verDescripcion ? (
+            <p className="card-descripcion">{movie.overview}</p>
+          ) : null}
+        </div>
       </div>
     );
   }

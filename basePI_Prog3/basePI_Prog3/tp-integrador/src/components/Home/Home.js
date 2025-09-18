@@ -85,20 +85,20 @@ class Home extends Component {
         </form>
 
         <h2>Películas top rated</h2>
-        <div className="grupo">
+        <div className="listado-cards">
           {this.state.topMoviesFiltradas.map((movie, idx) =>
             idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
           )}
         </div>
-        <Link to="/movies">Ver todas</Link>
+        <Link className="boton" to="/movies">Ver todas</Link>
 
         <h2>Series top rated</h2>
-        <div className="grupo">
+        <div className="listado-cards">
           {this.state.topSeriesFiltradas.map((serie, idx) =>
             idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
           )}
         </div>
-        <Link to="/series">Ver todas</Link>
+        <Link className="boton" to="/series">Ver todas</Link>
       </main>
     );
   }

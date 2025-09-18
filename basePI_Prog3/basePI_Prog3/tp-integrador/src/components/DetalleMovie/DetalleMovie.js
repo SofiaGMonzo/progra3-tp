@@ -12,7 +12,9 @@ class DetalleMovie extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`)
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`
+    )
       .then((res) => res.json())
       .then((data) => {
         const guardado = localStorage.getItem("favMovies");
@@ -61,28 +63,43 @@ class DetalleMovie extends Component {
     const generos = movie.genres;
 
     return (
-      <div className="detalle-pelicula">
-       
+      <div className="detalle">
+        <div className="detalle-header">
+          <img src={poster} alt={titulo} className="detalle-poster" />
+          <div className="detalle-info">
+            <h1 className="detalle-titulo">{titulo}</h1>
+            <p className="detalle-rating">Calificación: {rating}</p>
+            <p className="detalle-fecha">Fecha de estreno: {fecha}</p>
+            {duracion && <p className="detalle-duracion">Duración: {duracion} min</p>}
+          </div>
+        </div>
 
-        <img src={poster} alt={titulo} className="detalle-poster" />
+        <div className="detalle-body">
+          <p className="detalle-sinopsis">{sinopsis}</p>
+          <div className="detalle-generos">
+            <p>Género:</p>
+            <ul className="lista-generos">
+              {generos &&
+                generos.map((genero) => (
+                  <li key={genero.id} className="genero-item">
+                    {genero.name}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
 
-        <h1>{titulo}</h1>
-        <p>Calificación: {rating}</p>
-        <p> Fecha de estreno: {fecha}</p>
-        <p> Duración: {duracion} min</p>
-        <p> Sinópsis: {sinopsis}</p>
-        <p> Género:  </p>
-        <ul>
-          {generos && generos.map((genero) => <li key={genero.id}>{genero.name}</li>)}
-        </ul>
-
-        <button onClick={() => this.manejarFavorito()}>
-          {esFavorito ? "☆ Quitar de favoritos" : "✮⋆˙ Agregar a favoritos"}
-        </button>
+        <div className="detalle-actions">
+          <button
+            onClick={() => this.manejarFavorito()}
+            className="btn-favorito"
+          >
+            {esFavorito ? "☆ Quitar de favoritos" : "✮⋆˙ Agregar a favoritos"}
+          </button>
+        </div>
       </div>
     );
   }
-};
+}
 
 export default DetalleMovie;
-

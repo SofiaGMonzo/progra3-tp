@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function Header({ ruta, nombre }) {
   return (
-    <li className="nav-item">
-      <Link to={ruta} className="nav-link">
+    <li className="objeto-item">
+      <Link to={ruta} className="objeto-link">
         {nombre}
       </Link>
     </li>

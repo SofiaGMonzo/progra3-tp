@@ -25,9 +25,7 @@ class CardSerie extends Component {
       ? arrayFavs.filter((id) => id !== idActual)
       : arrayFavs.concat(idActual);
 
-    const actualizado = JSON.stringify(nuevaLista);
-    localStorage.setItem(clave, actualizado);
-
+    localStorage.setItem(clave, JSON.stringify(nuevaLista));
     this.setState({ esFavorito: !estaba });
   }
 
@@ -39,25 +37,39 @@ class CardSerie extends Component {
   }
 
   render() {
+    const { serie } = this.props;
+
     return (
       <div className="card">
-        <img
-          src={"https://image.tmdb.org/t/p/w200" + this.props.serie.poster_path}
-          alt={this.props.serie.name}
-        />
-        <p>{this.props.serie.name}</p>
+        <div className="cardd">
+          <img
+            className="card-img"
+            src={"https://image.tmdb.org/t/p/w200" + serie.poster_path}
+            alt={serie.name}
+          />
+        </div>
 
-        <Link to={`/serie/${this.props.serie.id}`}>Ir a detalle</Link>
+        <div className="card-overlay">
+          <h3 className="card-titulo">{serie.name}</h3>
 
-        <button onClick={() => this.manejarDescripcion()}>
-          {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
-        </button>
+          <div className="cardactiva">
+            <Link to={`/serie/${serie.id}`} className="boton boton-detalle">
+              Ir a detalle
+            </Link>
 
-        {this.state.verDescripcion ? <p>{this.props.serie.overview}</p> : null}
+            <button onClick={() => this.manejarDescripcion()} className="boton botoncosa">
+              {this.state.verDescripcion ? "Ocultar descripción" : "Ver descripción"}
+            </button>
 
-        <button onClick={() => this.manejarFavorito()}>
-          {this.state.esFavorito ? "☆ Quitar de favoritos" : " ✮⋆˙ Agregar a favoritos"}
-        </button>
+            <button onClick={() => this.manejarFavorito()} className="boton boton-favorito">
+              {this.state.esFavorito ? "☆ Quitar de favoritos" : "✮⋆˙ Agregar a favoritos"}
+            </button>
+          </div>
+
+          {this.state.verDescripcion ? (
+            <p className="card-descripcion">{serie.overview}</p>
+          ) : null}
+        </div>
       </div>
     );
   }
