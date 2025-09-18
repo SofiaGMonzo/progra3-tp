@@ -49,7 +49,7 @@ function App() {
             <Route path="/series" component={Series} />
             <Route path="/serie/:id" component={DetalleSerie} />
             <Route path="/favorites" component={Favorites} />
-            <Route path="/results" component={Results} />
+            <Route path="/results/:tipo/:q" component={Results} />
             <Route component={NotFound} />
             
           </Switch>
