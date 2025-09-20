@@ -1,62 +1,76 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import CardSerie from "../../components/CardSerie/CardSerie";
+import CardMovie from "../../components/CardMovie/CardMovie";
 
 class Results extends Component {
   constructor(props) {
     super(props);
-
-    const params = this.props.match.params;
-    let tipoInicial = "movie";
-    if (params && params.tipo === "tv") {
-      tipoInicial = "tv";
-    }
-
-    let terminoInicial = "";
-    if (params && params.q) {
-      terminoInicial = params.q;
-    }
-
     this.state = {
-      tipo: tipoInicial, // "movie" o "tv"
-      q: terminoInicial  // término de búsqueda
+      items: [],
+      loading: true,
+      tipo: "",
+      q: ""
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const antes = prevProps.match.params;
-    const ahora = this.props.match.params;
+  componentDidMount() {
+    const tipo = this.props.match.params.tipo; 
+    const q = this.props.match.params.q;
 
-    if (antes.tipo !== ahora.tipo || antes.q !== ahora.q) {
-      let nuevoTipo = "movie";
-      if (ahora.tipo === "tv") { nuevoTipo = "tv"; }
+    this.setState({ tipo: tipo, q: q, loading: true });
 
-      let nuevoQ = "";
-      if (ahora.q) { nuevoQ = ahora.q; }
-
-      this.setState({ tipo: nuevoTipo, q: nuevoQ });
+    let endpoint = "";
+    if (tipo === "tv") {
+      endpoint = "tv";
     }
+    if (tipo === "movie") {
+      endpoint = "movie";
+    }
+
+
+    fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + q)
+      .then(res => res.json())
+      .then(data => {
+        let resultados = [];
+        if (data && data.results) {
+          resultados = data.results;
+        }
+        this.setState({ items: resultados, loading: false });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ loading: false });
+      });
   }
 
   render() {
-    const tipo = this.state.tipo;
-    const q = this.state.q;
-
-    let titulo = "Resultados";
-    if (q !== "") {
-      if (tipo === "movie") {
-        titulo = 'Resultados de películas para: "' + q + '"';
-      } else {
-        titulo = 'Resultados de series para: "' + q + '"';
-      }
+    if (this.state.loading) {
+      return <p>Cargando...</p>;
     }
 
+    let queEs = this.state.tipo === "tv";
+    let tituloPagina = "Resultados de películas";
+    if (queEs) {
+      tituloPagina = "Resultados de series";
+    }
+
+    let q = this.state.q;
+    let items = this.state.items;
+
     return (
-      <div className="container">
-        <h2>{titulo}</h2>
-        <p>Ruta recibida: /results/{tipo}/{q}</p>
-        {/* Aquí, si querés, más adelante agregás el fetch. */}
-      </div>
+      <main>
+        <h2>{tituloPagina}: “{q}”</h2>
+        <div className="listado-cards">
+          {queEs
+            ? items.map(serie => <CardSerie key={serie.id} serie={serie} />)
+            : items.map(movie => <CardMovie key={movie.id} movie={movie} />)}
+        </div>
+      </main>
+       
     );
   }
 }
 
 export default Results;
+
