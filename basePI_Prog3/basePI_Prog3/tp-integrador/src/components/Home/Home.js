@@ -11,11 +11,14 @@ class Home extends Component {
       companyImages: [],
       topMovies: [],
       topSeries: [],
+      popularMovies: [],
+      popularSeries: [],
       search: "",
       valor: "",
       topMoviesFiltradas: [],
       topSeriesFiltradas: [],
-      popularMoviesFilatradas: []
+      popularMoviesFiltradas: [],
+      popularSeriesFiltradas: []
     };
   }
 
@@ -30,21 +33,35 @@ class Home extends Component {
   }
 
   filtro(texto) {
-    let arrayPeliculas = this.state.topMovies.filter(
+    let arrayPeliculasTop = this.state.topMovies.filter(
       (elemento) =>
         elemento.title &&
         elemento.title.toLowerCase().includes(texto.toLowerCase())
     );
 
-    let arraySeries = this.state.topSeries.filter(
+    let arraySeriesTop = this.state.topSeries.filter(
       (elemento) =>
         elemento.name &&
         elemento.name.toLowerCase().includes(texto.toLowerCase())
     );
 
+    let arraySeriesPopular = this.state.popularSeries.filter(
+      (elemento) =>
+        elemento.name &&
+        elemento.name.toLowerCase().includes(texto.toLowerCase())
+    );
+
+    let arrayPeliculasPopular  = this.state.popularMovies.filter(
+      (elemento) =>
+        elemento.title &&
+        elemento.title.toLowerCase().includes(texto.toLowerCase())
+    );
+
     this.setState({
-      topMoviesFiltradas: arrayPeliculas,
-      topSeriesFiltradas: arraySeries
+      topMoviesFiltradas: arrayPeliculasTop,
+      topSeriesFiltradas: arraySeriesTop,
+      popularSeriesFiltradas: arraySeriesPopular,
+      popularMoviesFiltradas: arrayPeliculasPopular
     });
   }
 
@@ -79,12 +96,22 @@ class Home extends Component {
         .then((res) => res.json())
         .then((data) => {
           this.setState({
-            topSeries: data.results,
-            topSeriesFiltradas: data.results
+            popularSeries: data.results,
+            popularSeriesFiltradas: data.results
           });
         })
         .catch((error) => console.log(error));
-
+        fetch(
+          "https://api.themoviedb.org/3/movie/popular?api_key=e017b082fb716585e3bd1e8377157925"
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({
+              popularMovies: data.results,
+              popularMoviesFiltradas: data.results
+            });
+          })
+          .catch((error) => console.log(error));
       
       
 
@@ -108,11 +135,25 @@ class Home extends Component {
             idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
           )}
         </div>
+
+        <h2>Películas populares</h2>
+        <div className="listado-cards">
+          {this.state.popularMoviesFiltradas.map((movie, idx) =>
+            idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
+          )}
+        </div>
         <Link className="boton" to="/movies">Ver todas</Link>
+
 
         <h2>Series top rated</h2>
         <div className="listado-cards">
           {this.state.topSeriesFiltradas.map((serie, idx) =>
+            idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
+          )}
+        </div>
+        <h2>Series populares</h2>
+        <div className="listado-cards">
+          {this.state.popularSeriesFiltradas.map((serie, idx) =>
             idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
           )}
         </div>
