@@ -9,7 +9,7 @@ class CardMovie extends Component {
 
     this.state = {
       verDescripcion: false,
-      esFavorito: pelisFavId.includes(this.props.movie.id)
+      esFavorito: pelisFavId.includes(this.props.movie.id),
     };
   }
 

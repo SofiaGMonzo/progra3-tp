@@ -8,7 +8,8 @@ class CardSeries extends Component {
       topSeries: [],
       valor: "",
       topSeriesFiltradas: [],
-      next: 1
+      next: 1,
+      loading: true
     };
   }
 
@@ -32,10 +33,12 @@ class CardSeries extends Component {
         this.setState({
           topSeries: data.results,
           topSeriesFiltradas: data.results,
-          next: data.page + 1
+          next: data.page + 1,
+          loading: false
         });
       })
       .catch((error) => console.log(error));
+      this.setState({ loading: false })
   }
 
   cargarMas() {
@@ -52,6 +55,9 @@ class CardSeries extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <p>Cargando...</p>;
+    }
     return (
       <main className="seccion">
         <form className="search-form buscador-form" onSubmit={(e) => this.evitarSubmit(e)}>

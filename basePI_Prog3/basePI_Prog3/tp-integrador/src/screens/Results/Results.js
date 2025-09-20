@@ -1,4 +1,3 @@
-// src/screens/Results/Results.js
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Headers from "../../components/Headers/Headers";
@@ -87,8 +86,8 @@ class Results extends Component {
       <div className="container">
         <nav>
           <Headers />
-          <form className="search-form" onSubmit={this.onSubmitBuscar}>
-            <div className="radio-group">
+          <form onSubmit={this.onSubmitBuscar}>
+            <div className="buscador-radio">
               <label>
                 <input
                   type="radio"
@@ -99,7 +98,7 @@ class Results extends Component {
                 />
                 Películas
               </label>
-              <label className="ml-12">
+              <label>
                 <input
                   type="radio"
                   name="tipo"
@@ -111,7 +110,7 @@ class Results extends Component {
               </label>
             </div>
 
-            <div className="controls-row">
+            <div>
               <input
                 type="text"
                 name="searchData"
@@ -120,17 +119,17 @@ class Results extends Component {
                 value={q}
                 onChange={this.controlarTexto}
               />
-              <button type="submit" className="btn btn-success btn-sm btn-pink">
+              <button type="submit" className="boton">
                 Buscar
               </button>
-              <Link to="/" className="btn btn-success btn-sm btn-pink ml-12">
+              <Link to="/" className="boton">
                 Volver al inicio
               </Link>
             </div>
           </form>
         </nav>
 
-        <header className="my-3">
+        <header>
           {q === "" ? (
             <h2>Resultados</h2>
           ) : (
@@ -146,7 +145,7 @@ class Results extends Component {
           (resultados.length === 0 ? (
             <p>No se encontraron resultados.</p>
           ) : (
-            <div className="grupo">
+            <div className="listado-cards">
               {tipo === "movie"
                 ? resultados.map((movie) => <CardMovie key={movie.id} movie={movie} />)
                 : resultados.map((serie) => <CardSerie key={serie.id} serie={serie} />)}

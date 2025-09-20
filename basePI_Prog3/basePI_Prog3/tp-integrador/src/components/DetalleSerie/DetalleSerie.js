@@ -6,14 +6,15 @@ class DetalleSerie extends Component {
     super(props);
     this.state = {
       serie: {},
-      esFavorito: false
+      esFavorito: false,
+      loading: true
     };
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
     fetch(
-      `https://api.themoviedb.org/3/tv/${id}?api_key=e017b082fb716585e3bd1e8377157925&language=es-ES`
+      `https://api.themoviedb.org/3/tv/${id}?api_key=e017b082fb716585e3bd1e8377157925`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -24,9 +25,12 @@ class DetalleSerie extends Component {
         }
         this.setState({
           serie: data,
-          esFavorito: arrayFavs.includes(data.id)
+          esFavorito: arrayFavs.includes(data.id),
+          loading: false
         });
-      });
+      })
+       .catch((error) => console.log(error)); 
+      this.setState({ loading: false });
   }
 
   manejarFavorito() {
@@ -51,6 +55,9 @@ class DetalleSerie extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <p>Cargando...</p>;
+    }
     const serie = this.state.serie;
     const esFavorito = this.state.esFavorito;
 

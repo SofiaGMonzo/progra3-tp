@@ -172,7 +172,18 @@ form input, form select {
   color: #f7e9f1;
 }
 
-
+.buscador-radio{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+ .logo{
+  width: 200px;
+  height: 200px;
+  border-radius: 40px;
+ }
 .boton {
 
   background: #f7b4cf;

@@ -33,13 +33,11 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header" style={{ display: "none" }}>
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+    <img className="logo" src="./img/logojulio.png" alt="logo" />
 
       <Router>
         <div className="container">
-          <h1>UdeSA Movies</h1>
+
           <Headers elementosMenu={menu} />
 
           <Switch>

@@ -53,7 +53,7 @@ class Favorites extends Component {
 
         <section className="favoritos-seccion">
           <h2 className="favoritos-titulo">Series favoritas</h2>
-          <div className="grupo listado-cards">
+          <div className="listado-cards">
             {this.state.series.length === 0 ? (
               <p className="favoritos-vacio">No hay series en favoritos.</p>
             ) : (

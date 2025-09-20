@@ -8,7 +8,8 @@ class CardMovies extends Component {
       topMovies: [],
       valor: "",
       topMoviesFiltradas: [],
-      next: 1
+      next: 1,
+      loading: true
     };
   }
 
@@ -36,10 +37,11 @@ class CardMovies extends Component {
         this.setState({
           topMovies: data.results,
           topMoviesFiltradas: data.results,
-          next: data.page + 1
+          next: data.page + 1,
+          loading: false
         });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error)); this.setState({ loading: false });
   }
 
   cargarMas() {
@@ -49,13 +51,17 @@ class CardMovies extends Component {
         this.setState({
           topMovies: this.state.topMovies.concat(data.results),
           topMoviesFiltradas: this.state.topMoviesFiltradas.concat(data.results),
-          next: data.page + 1
+          next: data.page + 1,
+          loading: false
         });
       })
       .catch((error) => console.log(error));
   }
 
   render() {
+  if (this.state.loading) {
+      return <p>Cargando...</p>;
+    }
     return (
       <main className="seccion">
         <form className="search-form buscador-form" onSubmit={(e) => this.evitarSubmit(e)}>

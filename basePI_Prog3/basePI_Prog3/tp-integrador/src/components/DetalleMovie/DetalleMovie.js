@@ -6,7 +6,8 @@ class DetalleMovie extends Component {
     super(props);
     this.state = {
       movie: {},
-      esFavorito: false
+      esFavorito: false,
+      loading: true
     };
   }
 
@@ -24,9 +25,12 @@ class DetalleMovie extends Component {
         }
         this.setState({
           movie: data,
-          esFavorito: arrayFavs.includes(data.id)
+          esFavorito: arrayFavs.includes(data.id),
+          loading: false
         });
-      });
+      })
+       .catch((error) => console.log(error)); 
+      this.setState({ loading: false });
   }
 
   manejarFavorito() {
@@ -51,6 +55,9 @@ class DetalleMovie extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <p>Cargando...</p>;
+    }
     const movie = this.state.movie;
     const esFavorito = this.state.esFavorito;
 

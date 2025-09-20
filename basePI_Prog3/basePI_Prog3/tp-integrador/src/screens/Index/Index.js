@@ -14,7 +14,6 @@ class Index extends React.Component {
     e.preventDefault();
     const { tipo, q } = this.state;
     if (q === "") return;
-    // Ruta parametrizada: /results/:tipo/:q
     this.props.history.push(`/results/${tipo}/${q}`);
   };
 
@@ -33,8 +32,8 @@ class Index extends React.Component {
       <div className="container">
         <nav>
           <Headers />
-          <form className="search-form" onSubmit={this.onSubmitBuscar}>
-            <div className="radio-group">
+          <form onSubmit={this.onSubmitBuscar}>
+            <div className="buscador-radio">
               <label>
                 <input
                   type="radio"
@@ -45,7 +44,7 @@ class Index extends React.Component {
                 />
                 Películas
               </label>
-              <label className="ml-12">
+              <label>
                 <input
                   type="radio"
                   name="tipo"
@@ -57,19 +56,18 @@ class Index extends React.Component {
               </label>
             </div>
 
-            <div className="controls-row">
+            <div>
               <input
                 type="text"
                 name="searchData"
-                className="search-input"
                 placeholder={tipo === "movie" ? "Buscar películas..." : "Buscar series..."}
                 value={q}
                 onChange={this.controlarCambios}
               />
-              <button type="submit" className="btn btn-success btn-sm btn-pink">
+              <button type="submit" className="boton">
                 Buscar
               </button>
-              <Link to="/" className="btn btn-success btn-sm btn-pink ml-12">
+              <Link to="/" className="boton">
                 Volver al inicio
               </Link>
             </div>
