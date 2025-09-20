@@ -14,7 +14,8 @@ class Home extends Component {
       search: "",
       valor: "",
       topMoviesFiltradas: [],
-      topSeriesFiltradas: []
+      topSeriesFiltradas: [],
+      popularMoviesFilatradas: []
     };
   }
 
@@ -71,6 +72,23 @@ class Home extends Component {
         });
       })
       .catch((error) => console.log(error));
+    
+      fetch(
+        "https://api.themoviedb.org/3/tv/popular?api_key=e017b082fb716585e3bd1e8377157925"
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({
+            topSeries: data.results,
+            topSeriesFiltradas: data.results
+          });
+        })
+        .catch((error) => console.log(error));
+
+      
+      
+
+    
   }
 
   render() {
@@ -99,6 +117,8 @@ class Home extends Component {
           )}
         </div>
         <Link className="boton" to="/series">Ver todas</Link>
+
+
       </main>
     );
   }

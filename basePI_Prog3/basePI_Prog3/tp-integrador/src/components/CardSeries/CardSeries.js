@@ -27,7 +27,7 @@ class CardSeries extends Component {
   }
 
   componentDidMount() {
-    fetch("https://api.themoviedb.org/3/tv/top_rated?api_key=e017b082fb716585e3bd1e8377157925")
+    fetch("https://api.themoviedb.org/3/discover/tv?api_key=e017b082fb716585e3bd1e8377157925")
       .then((res) => res.json())
       .then((data) => {
         this.setState({
@@ -42,7 +42,7 @@ class CardSeries extends Component {
   }
 
   cargarMas() {
-    fetch(`https://api.themoviedb.org/3/tv/top_rated?page=${this.state.next}&api_key=e017b082fb716585e3bd1e8377157925`)
+    fetch(`https://api.themoviedb.org/3/discover/tv?page=${this.state.next}&api_key=e017b082fb716585e3bd1e8377157925`)
       .then((res) => res.json())
       .then((data) => {
         this.setState({
@@ -69,7 +69,7 @@ class CardSeries extends Component {
           />
         </form>
 
-        <h2 className="seccion-titulo">Series top rated</h2>
+        <h2 className="seccion-titulo">Todas las series</h2>
         <div className="cards grupo listado-cards">
           {this.state.topSeriesFiltradas.map((serie) => (
             <CardSerie key={serie.id} serie={serie} />
