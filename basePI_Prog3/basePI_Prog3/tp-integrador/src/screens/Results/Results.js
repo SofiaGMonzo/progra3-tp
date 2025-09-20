@@ -1,156 +1,59 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Headers from "../../components/Headers/Headers";
-import CardMovie from "../../components/CardMovie/CardMovie";
-import CardSerie from "../../components/CardSerie/CardSerie";
 
 class Results extends Component {
   constructor(props) {
     super(props);
 
-    const { tipo, q } = this.props.match.params;
+    const params = this.props.match.params;
+    let tipoInicial = "movie";
+    if (params && params.tipo === "tv") {
+      tipoInicial = "tv";
+    }
+
+    let terminoInicial = "";
+    if (params && params.q) {
+      terminoInicial = params.q;
+    }
 
     this.state = {
-      tipo: tipo === "tv" ? "tv" : "movie",
-      q: typeof q === "string" ? q : "",
-      resultados: [],
-      estado: "cargando",
-      errorMsg: ""
+      tipo: tipoInicial, // "movie" o "tv"
+      q: terminoInicial  // término de búsqueda
     };
   }
 
-  componentDidMount() {
-    this.buscar();
-  }
-
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.match.params.tipo !== this.props.match.params.tipo ||
-      prevProps.match.params.q !== this.props.match.params.q
-    ) {
-      const { tipo, q } = this.props.match.params;
-      this.setState(
-        {
-          tipo: tipo === "tv" ? "tv" : "movie",
-          q: typeof q === "string" ? q : ""
-        },
-        () => this.buscar()
-      );
+    const antes = prevProps.match.params;
+    const ahora = this.props.match.params;
+
+    if (antes.tipo !== ahora.tipo || antes.q !== ahora.q) {
+      let nuevoTipo = "movie";
+      if (ahora.tipo === "tv") { nuevoTipo = "tv"; }
+
+      let nuevoQ = "";
+      if (ahora.q) { nuevoQ = ahora.q; }
+
+      this.setState({ tipo: nuevoTipo, q: nuevoQ });
     }
   }
 
-  onSubmitBuscar = (e) => {
-    e.preventDefault();
-    const { tipo, q } = this.state;
-    if (q === "") return;
-    this.props.history.push(`/results/${tipo}/${q}`);
-  };
-
-  controlarTexto = (e) => {
-    this.setState({ q: e.target.value });
-  };
-
-  cambiarTipo = (e) => {
-    this.setState({ tipo: e.target.value });
-  };
-
-  buscar() {
-    const { tipo, q } = this.state;
-    if (q === "") return;
-
-    this.setState({ estado: "loading", errorMsg: "", resultados: [] });
-
-    const url = `https://api.themoviedb.org/3/search/${tipo}?api_key=e017b082fb716585e3bd1e8377157925&query=${q}`;
-
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error("Error consultando TMDB");
-        return res.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data.results)) {
-          this.setState({ resultados: data.results, estado: "ok" });
-        } else {
-          this.setState({ resultados: [], estado: "ok" });
-        }
-      })
-      .catch((err) => {
-        this.setState({ estado: "error", errorMsg: err.message });
-      });
-  }
-
   render() {
-    const { tipo, q, resultados, estado, errorMsg } = this.state;
+    const tipo = this.state.tipo;
+    const q = this.state.q;
+
+    let titulo = "Resultados";
+    if (q !== "") {
+      if (tipo === "movie") {
+        titulo = 'Resultados de películas para: "' + q + '"';
+      } else {
+        titulo = 'Resultados de series para: "' + q + '"';
+      }
+    }
 
     return (
       <div className="container">
-        <nav>
-          <Headers />
-          <form onSubmit={this.onSubmitBuscar}>
-            <div className="buscador-radio">
-              <label>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value="movie"
-                  checked={tipo === "movie"}
-                  onChange={this.cambiarTipo}
-                />
-                Películas
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="tipo"
-                  value="tv"
-                  checked={tipo === "tv"}
-                  onChange={this.cambiarTipo}
-                />
-                Series
-              </label>
-            </div>
-
-            <div>
-              <input
-                type="text"
-                name="searchData"
-                className="search-input"
-                placeholder={tipo === "movie" ? "Buscar películas..." : "Buscar series..."}
-                value={q}
-                onChange={this.controlarTexto}
-              />
-              <button type="submit" className="boton">
-                Buscar
-              </button>
-              <Link to="/" className="boton">
-                Volver al inicio
-              </Link>
-            </div>
-          </form>
-        </nav>
-
-        <header>
-          {q === "" ? (
-            <h2>Resultados</h2>
-          ) : (
-            <h2>Resultados de {tipo === "movie" ? "películas" : "series"} para: “{q}”</h2>
-          )}
-        </header>
-
-        {q === "" && <p>Ingrese un término de búsqueda.</p>}
-        {estado === "loading" && <p>Cargando...</p>}
-        {estado === "error" && <p>Ocurrió un problema: {errorMsg}</p>}
-
-        {estado === "ok" &&
-          (resultados.length === 0 ? (
-            <p>No se encontraron resultados.</p>
-          ) : (
-            <div className="listado-cards">
-              {tipo === "movie"
-                ? resultados.map((movie) => <CardMovie key={movie.id} movie={movie} />)
-                : resultados.map((serie) => <CardSerie key={serie.id} serie={serie} />)}
-            </div>
-          ))}
+        <h2>{titulo}</h2>
+        <p>Ruta recibida: /results/{tipo}/{q}</p>
+        {/* Aquí, si querés, más adelante agregás el fetch. */}
       </div>
     );
   }
