@@ -12,14 +12,14 @@ class Favorites extends Component {
   }
 
   componentDidMount() {
-    let guardadoMovies = localStorage.getItem("favMovies");
+    let guardadoMovies = localStorage.getItem("moviesFavoritas");
     let guardadoSeries = localStorage.getItem("favSeries");
 
-    let favMoviesIds = guardadoMovies ? JSON.parse(guardadoMovies) : [];
+    let moviesFavoritasIds = guardadoMovies ? JSON.parse(guardadoMovies) : [];
     let favSeriesIds = guardadoSeries ? JSON.parse(guardadoSeries) : [];
 
     let pelisArray = [];
-    favMoviesIds.map((id) =>
+    moviesFavoritasIds.map((id) =>
       fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`)
         .then((res) => res.json())
         .then((data) => {

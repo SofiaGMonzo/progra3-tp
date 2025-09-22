@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Index() {
   return (
-    <div className="container">
+    <div >
       <Home />
     </div>
   );

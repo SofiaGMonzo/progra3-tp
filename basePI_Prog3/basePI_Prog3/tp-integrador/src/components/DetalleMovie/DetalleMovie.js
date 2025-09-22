@@ -11,39 +11,35 @@ class DetalleMovie extends Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
-    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`)
+    fetch(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=e017b082fb716585e3bd1e8377157925`)
       .then((res) => res.json())
       .then((data) => {
         let arrayFavs = [];
-        if (localStorage.getItem("favMovies") !== null) {
-          arrayFavs = JSON.parse(localStorage.getItem("favMovies"));
+        if (localStorage.getItem("moviesFavoritas") !== null) {
+          arrayFavs = JSON.parse(localStorage.getItem("moviesFavoritas"));
         }
         this.setState({
           movie: data,
-          esFavorito: arrayFavs.includes(data.id)
+          esFavorito: arrayFavs.includes(data.this.props.match.params.id)
         });
       })
       .catch((error) => console.log(error));
   }
 
   manejarFavorito() {
-    let arrayFavs = [];
-    if (localStorage.getItem("favMovies") !== null) {
-      arrayFavs = JSON.parse(localStorage.getItem("favMovies"));
-    }
+  let guardado = localStorage.getItem("moviesFavoritas");
+  let arrayFavs = guardado ? JSON.parse(guardado) : [];
 
-    if (arrayFavs.includes(this.state.movie.id)) {
-      arrayFavs = arrayFavs.filter((id) => id !== this.state.movie.id);
-      this.setState({ esFavorito: false });
-    } else {
-      arrayFavs.push(this.state.movie.id);
-      this.setState({ esFavorito: true });
-    }
+  let estaba = arrayFavs.includes(this.state.movie.id);
+  let nuevaLista = estaba
+    ? arrayFavs.filter((id) => id !== this.state.movie.id)
+    : arrayFavs.concat(this.state.movie.id);
+  let actualizado = JSON.stringify(nuevaLista);
 
-    let actualizado = JSON.stringify(arrayFavs);
-    localStorage.setItem("favMovies", actualizado);
-  }
+  localStorage.setItem("moviesFavoritas", actualizado);
+  this.setState({ esFavorito: !estaba });
+}
+
 
   render() {
     return (

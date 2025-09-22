@@ -4,9 +4,8 @@ import DetalleSerie from "../../components/DetalleSerie/DetalleSerie";
 
 function Serie() {
   return (
-    <div className="container">
+    <div >
 
-     ;
   
   <DetalleSerie/>
       

@@ -4,8 +4,7 @@ import DetalleMovie from "../../components/DetalleMovie/DetalleMovie";
 
 function Movie() {
   return (
-    <div className="container">
-      <h1>UdeSA Movies</h1>
+    <div >
       
     <DetalleMovie/>
     </div>

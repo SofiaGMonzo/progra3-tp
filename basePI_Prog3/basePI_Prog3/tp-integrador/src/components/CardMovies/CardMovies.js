@@ -6,29 +6,8 @@ class CardMovies extends Component {
     super(props);
     this.state = {
       topMovies: [],
-      valor: "",
-      topMoviesFiltradas: [],
       next: 1
     };
-  }
-
-  evitarSubmit(event) { 
-    event.preventDefault(); }
-
-  controlarCambios(event) {
-    this.setState({ valor: event.target.value }, 
-      () => this.filtro(this.state.valor));
-  }
-
-  filtro(texto) {
-    if (texto === "") {
-      this.setState({ topMoviesFiltradas: this.state.topMovies });
-      return;
-    }
-    let arrayPeliculas = this.state.topMovies.filter((event) =>
-      event.title && event.title.toLowerCase().includes(texto.toLowerCase())
-    );
-    this.setState({ topMoviesFiltradas: arrayPeliculas });
   }
 
   componentDidMount() {
@@ -37,7 +16,6 @@ class CardMovies extends Component {
       .then((data) => {
         this.setState({
           topMovies: data.results,
-          topMoviesFiltradas: data.results,
           next: data.page + 1
         });
       })
@@ -50,7 +28,6 @@ class CardMovies extends Component {
       .then((data) => {
         this.setState({
           topMovies: this.state.topMovies.concat(data.results),
-          topMoviesFiltradas: this.state.topMoviesFiltradas.concat(data.results),
           next: data.page + 1
         });
       })
@@ -60,21 +37,12 @@ class CardMovies extends Component {
   render() {
     return (
       <main className="seccion">
-        <form className="search-form buscador-form" onSubmit={(event) => this.evitarSubmit(event)}>
-          <input
-            className="buscador-input"
-            type="text"
-            placeholder="Buscar..."
-            onChange={(event) => this.controlarCambios(event)}
-          />
-        </form>
-
         <h2 className="seccion-titulo">Todas las peliculas</h2>
         <div className="cards grupo listado-cards">
-          {this.state.topMovies.length === 0 ? (
+          {this.state.topMovies.length === " " ? (
             <h3>Cargando...</h3>
           ) : (
-            this.state.topMoviesFiltradas.map((movie) => (
+            this.state.topMovies.map((movie) => (
               <CardMovie key={movie.id} movie={movie} />
             ))
           )}

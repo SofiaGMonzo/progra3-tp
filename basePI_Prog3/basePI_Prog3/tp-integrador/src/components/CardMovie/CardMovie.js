@@ -4,12 +4,9 @@ import { Link } from "react-router-dom";
 class CardMovie extends Component {
   constructor(props) {
     super(props);
-    const pelisFav = localStorage.getItem("favMovies");
-    const pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
-
     this.state = {
       verDescripcion: false,
-      esFavorito: pelisFavId.includes(this.props.movie.id),
+      esFavorito: false
     };
   }
 
@@ -18,24 +15,26 @@ class CardMovie extends Component {
   }
 
   manejarFavorito() {
-  const pelisFav = localStorage.getItem("favMovies");
-  let pelisFavId = pelisFav ? JSON.parse(pelisFav) : [];
+    let guardado = localStorage.getItem("moviesFavoritas");
+    let arrayFavs = guardado ? JSON.parse(guardado) : [];
 
-  if (this.state.esFavorito) {
-    pelisFavId = pelisFavId.filter(id => id !== this.props.movie.id);
-  } else {
-    if (!pelisFavId.includes(this.props.movie.id)) {
-      pelisFavId.push(this.props.movie.id);
-    }
+    let estaba = arrayFavs.includes(this.props.movie.id);
+    let nuevaLista = estaba
+      ? arrayFavs.filter((id) => id !== this.props.movie.id)
+      : arrayFavs.concat(this.props.movie.id);
+    let actualizado = JSON.stringify(nuevaLista);
+
+    localStorage.setItem("moviesFavoritas", actualizado);
+    this.setState({ esFavorito: !estaba });
   }
 
-  localStorage.setItem("favMovies", JSON.stringify(pelisFavId));
-  this.setState({ esFavorito: !this.state.esFavorito });
-}
-
+  componentDidMount() {
+    let guardado = localStorage.getItem("moviesFavoritas");
+    let arrayFavs = guardado ? JSON.parse(guardado) : [];
+    this.setState({ esFavorito: arrayFavs.includes(this.props.movie.id) });
+  }
 
   render() {
-
     return (
       <div className="card">
         <div className="cardd">

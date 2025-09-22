@@ -15,24 +15,22 @@ class CardSerie extends Component {
   }
 
   manejarFavorito() {
-    const clave = "favSeries";
-    const idActual = this.props.serie.id;
-    const guardado = localStorage.getItem(clave);
-    const arrayFavs = guardado ? JSON.parse(guardado) : [];
+    let guardado = localStorage.getItem("favSeries");
+    let arrayFavs = guardado ? JSON.parse(guardado) : [];
 
-    const estaba = arrayFavs.includes(idActual);
-    const nuevaLista = estaba
-      ? arrayFavs.filter((id) => id !== idActual)
-      : arrayFavs.concat(idActual);
+    let estaba = arrayFavs.includes(this.props.serie.id);
+    let nuevaLista = estaba
+      ? arrayFavs.filter((id) => id !== this.props.serie.id)
+      : arrayFavs.concat(this.props.serie.id);
+    let actualizado = JSON.stringify(nuevaLista);
 
-    localStorage.setItem(clave, JSON.stringify(nuevaLista));
+    localStorage.setItem("favSeries", actualizado);
     this.setState({ esFavorito: !estaba });
   }
 
   componentDidMount() {
-    const clave = "favSeries";
-    const guardado = localStorage.getItem(clave);
-    const arrayFavs = guardado ? JSON.parse(guardado) : [];
+    let guardado = localStorage.getItem("favSeries");
+    let arrayFavs = guardado ? JSON.parse(guardado) : [];
     this.setState({ esFavorito: arrayFavs.includes(this.props.serie.id) });
   }
 
@@ -40,11 +38,7 @@ class CardSerie extends Component {
     return (
       <div className="card">
         <div className="cardd">
-          <img
-            className="card-img"
-            src={"https://image.tmdb.org/t/p/w200" + this.props.serie.poster_path}
-            alt={this.props.serie.name}
-          />
+          <img className="card-img" src={"https://image.tmdb.org/t/p/w200" + this.props.serie.poster_path} alt={this.props.serie.name}/>
         </div>
 
         <div className="card-overlay">

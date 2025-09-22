@@ -52,18 +52,13 @@ class Buscador extends Component {
           <input
             type="text"
             name="searchData"
-            placeholder={this.state.tipo === "movie" ? "Buscar películas..." : "Buscar series..."}
             value={this.state.q}
             onChange={(event) => this.controlarCambios(event)}
           />
 
-          <Link
-            to={"/results/" + this.state.tipo + "/" + this.state.q}
-            className="boton"
-            onClick={(e) => { if (this.state.q === "") { e.preventDefault(); } }}
-          >
-            Buscar
-          </Link>
+          <Link to={"/results/" + this.state.tipo + "/" + this.state.q} className="boton"
+            onClick={(event) => { if (this.state.q === "") { event.preventDefault(); } }}
+          >Buscar </Link>
         </div>
       </form>
     );

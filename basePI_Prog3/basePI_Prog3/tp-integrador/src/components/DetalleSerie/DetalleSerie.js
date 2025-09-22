@@ -11,9 +11,8 @@ class DetalleSerie extends Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
     fetch(
-      `https://api.themoviedb.org/3/tv/${id}?api_key=e017b082fb716585e3bd1e8377157925`
+      `https://api.themoviedb.org/3/tv/${this.props.match.params.id}?api_key=e017b082fb716585e3bd1e8377157925`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -23,28 +22,25 @@ class DetalleSerie extends Component {
         }
         this.setState({
           serie: data,
-          esFavorito: arrayFavs.includes(data.id)
+          esFavorito: arrayFavs.includes(data.this.props.match.params.id)
         });
       })
       .catch((error) => console.log(error));
   }
 
-  manejarFavorito() {
-    let arrayFavs = [];
-    if (localStorage.getItem("favSeries") !== null) {
-      arrayFavs = JSON.parse(localStorage.getItem("favSeries"));
-    }
+manejarFavorito() {
+  let guardado = localStorage.getItem("favSeries");
+  let arrayFavs = guardado ? JSON.parse(guardado) : [];
 
-    if (arrayFavs.includes(this.state.serie.id)) {
-      arrayFavs = arrayFavs.filter((id) => id !== this.state.serie.id);
-      this.setState({ esFavorito: false });
-    } else {
-      arrayFavs.push(this.state.serie.id);
-      this.setState({ esFavorito: true });
-    }
+  let estaba = arrayFavs.includes(this.state.serie.id);
+  let nuevaLista = estaba
+    ? arrayFavs.filter((id) => id !== this.state.serie.id)
+    : arrayFavs.concat(this.state.serie.id);
+  let actualizado = JSON.stringify(nuevaLista);
 
-    localStorage.setItem("favSeries", JSON.stringify(arrayFavs));
-  }
+  localStorage.setItem("favSeries", actualizado);
+  this.setState({ esFavorito: !estaba });
+}
 
   render() {
     return (
