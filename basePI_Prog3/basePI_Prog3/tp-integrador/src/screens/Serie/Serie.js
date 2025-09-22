@@ -7,7 +7,6 @@ function Serie() {
     <div className="container">
 
      ;
-     <Headers/>
   
   <DetalleSerie/>
       

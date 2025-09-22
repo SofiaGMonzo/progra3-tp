@@ -3,12 +3,10 @@ import { Link } from "react-router-dom";
 import CardMovie from "../CardMovie/CardMovie";
 import CardSerie from "../CardSerie/CardSerie";
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyImages: [],
       topMovies: [],
       topSeries: [],
       popularMovies: [],
@@ -51,7 +49,7 @@ class Home extends Component {
         elemento.name.toLowerCase().includes(texto.toLowerCase())
     );
 
-    let arrayPeliculasPopular  = this.state.popularMovies.filter(
+    let arrayPeliculasPopular = this.state.popularMovies.filter(
       (elemento) =>
         elemento.title &&
         elemento.title.toLowerCase().includes(texto.toLowerCase())
@@ -76,9 +74,7 @@ class Home extends Component {
       })
       .catch((error) => console.log(error));
 
-    fetch(
-      "https://api.themoviedb.org/3/tv/top_rated?api_key=e017b082fb716585e3bd1e8377157925"
-    )
+    fetch("https://api.themoviedb.org/3/tv/top_rated?api_key=e017b082fb716585e3bd1e8377157925")
       .then((res) => res.json())
       .then((data) => {
         this.setState({
@@ -87,33 +83,26 @@ class Home extends Component {
         });
       })
       .catch((error) => console.log(error));
-    
-      fetch(
-        "https://api.themoviedb.org/3/tv/popular?api_key=e017b082fb716585e3bd1e8377157925"
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({
-            popularSeries: data.results,
-            popularSeriesFiltradas: data.results
-          });
-        })
-        .catch((error) => console.log(error));
-        fetch(
-          "https://api.themoviedb.org/3/movie/popular?api_key=e017b082fb716585e3bd1e8377157925"
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            this.setState({
-              popularMovies: data.results,
-              popularMoviesFiltradas: data.results
-            });
-          })
-          .catch((error) => console.log(error));
-      
-      
 
-    
+    fetch("https://api.themoviedb.org/3/tv/popular?api_key=e017b082fb716585e3bd1e8377157925")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          popularSeries: data.results,
+          popularSeriesFiltradas: data.results
+        });
+      })
+      .catch((error) => console.log(error));
+
+    fetch("https://api.themoviedb.org/3/movie/popular?api_key=e017b082fb716585e3bd1e8377157925")
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          popularMovies: data.results,
+          popularMoviesFiltradas: data.results
+        });
+      })
+      .catch((error) => console.log(error));
   }
 
   render() {
@@ -129,35 +118,49 @@ class Home extends Component {
 
         <h2>Películas top rated</h2>
         <div className="listado-cards">
-          {this.state.topMoviesFiltradas.map((movie, idx) =>
-            idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
+          {this.state.topMoviesFiltradas.length === " " ? (
+            <h3>Cargando...</h3>
+          ) : (
+            this.state.topMoviesFiltradas.map((movie, idx) =>
+              idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
+            )
           )}
         </div>
 
         <h2>Películas populares</h2>
         <div className="listado-cards">
-          {this.state.popularMoviesFiltradas.map((movie, idx) =>
-            idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
+          {this.state.popularMoviesFiltradas.length === " " ? (
+            <h3>Cargando...</h3>
+          ) : (
+            this.state.popularMoviesFiltradas.map((movie, idx) =>
+              idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
+            )
           )}
         </div>
         <Link className="boton" to="/movies">Ver todas</Link>
 
-
         <h2>Series top rated</h2>
         <div className="listado-cards">
-          {this.state.topSeriesFiltradas.map((serie, idx) =>
-            idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
+          {this.state.topSeriesFiltradas.length === " " ? (
+            <h3>Cargando...</h3>
+          ) : (
+            this.state.topSeriesFiltradas.map((serie, idx) =>
+              idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
+            )
           )}
         </div>
+
         <h2>Series populares</h2>
         <div className="listado-cards">
-          {this.state.popularSeriesFiltradas.map((serie, idx) =>
-            idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
+          {this.state.popularSeriesFiltradas.length === " " ? (
+            <h3>Cargando...</h3>
+          ) : (
+            this.state.popularSeriesFiltradas.map((serie, idx) =>
+              idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
+            )
           )}
         </div>
         <Link className="boton" to="/series">Ver todas</Link>
-
-
       </main>
     );
   }

@@ -225,15 +225,16 @@ form input, form select {
 .listado-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
+
   
 }
 
 .listado-cards .card {
-  flex: 0 0 23%;   
-  border: 2px solid pink; 
-  box-sizing: border-box;
+  width: 23%;
+  border: 2px solid pink;
   border-radius: 30px;
+  box-sizing: border-box;
 }
 
 .favoritos {

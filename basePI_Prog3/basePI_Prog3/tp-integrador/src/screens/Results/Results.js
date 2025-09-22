@@ -8,30 +8,26 @@ class Results extends Component {
     super(props);
     this.state = {
       items: [],
-      loading: true,
       tipo: "",
       q: ""
     };
   }
 
   componentDidMount() {
-    const tipo = this.props.match.params.tipo; 
-    const q = this.props.match.params.q;
-
     this.setState({ 
-      tipo: tipo, 
-      q: q, 
-      loading: true });
+      tipo: this.props.match.params.tipo, 
+      q: this.props.match.params.q
+    });
 
     let endpoint = "";
-    if (tipo === "tv") {
+    if (this.props.match.params.tipo === "tv") {
       endpoint = "tv";
     }
-    if (tipo === "movie") {
+    if (this.props.match.params.tipo === "movie") {
       endpoint = "movie";
     }
 
-    fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + q)
+    fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + this.props.match.params.q)
       .then(res => res.json())
       .then(data => {
         let resultados = [];
@@ -39,33 +35,29 @@ class Results extends Component {
           resultados = data.results;
         }
         this.setState({ 
-          items: resultados, 
-          loading: false });
+          items: resultados
+         });
       })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-      });
+      .catch(error => {console.log(error)});
   }
 
   componentDidUpdate(anteriores) {
-    const tipo = this.props.match.params.tipo;
-    const q = this.props.match.params.q;
-    const tipo2 = anteriores.match.params.tipo;
-    const q2 = anteriores.match.params.q;
 
-    if (tipo === tipo2 ? q !== q2 : true) {
-      this.setState({ tipo: tipo, q: q, loading: true });
+    if (this.props.match.params.tipo === anteriores.match.params.tipo ? this.props.match.params.q !== anteriores.match.params.q : true) {
+      this.setState({ 
+        tipo: this.props.match.params.tipo, 
+        q: this.props.match.params.q 
+      });
 
       let endpoint = "";
-      if (tipo === "tv") {
+      if (this.props.match.params.tipo === "tv") {
         endpoint = "tv";
       }
-      if (tipo === "movie") {
+      if (this.props.match.params.tipo === "movie") {
         endpoint = "movie";
       }
 
-      fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" +q)
+      fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + this.props.match.params.q)
         .then((res) => res.json())
         .then((data) => {
           let resultados = [];
@@ -73,39 +65,32 @@ class Results extends Component {
             resultados = data.results;
           }
           this.setState({ 
-            items: resultados, 
-            loading: false });
+            items: resultados});
         })
-        .catch((error) => {
-          console.log(error);
-          this.setState({ loading: false });
-        });
+        .catch((error) => {console.log(error)});
     }
   }
 
-  render() {
-    if (this.state.loading) {
-      return <p>Cargando...</p>;
-    }
+render() {
+  return (
+    <main>
+      <h2>
+        {this.state.tipo === "tv"
+          ? "Resultados de series"
+          : "Resultados de películas"}: “{this.state.q}”
+      </h2>
 
-    let queEs = this.state.tipo === "tv";
-    let tituloPagina = queEs ? "Resultados de series" : "Resultados de películas";
-
-    let q = this.state.q;
-    let items = this.state.items;
-
-    return (
-      <main>
-        <h2>{tituloPagina}: “{q}”</h2>
-        <div className="listado-cards">
-          {queEs
-            ? items.map(serie => <CardSerie key={serie.id} serie={serie} />)
-            : items.map(movie => <CardMovie key={movie.id} movie={movie} />)}
-        </div>
-      </main>
-    );
-  }
+      <div className="listado-cards">
+        {this.state.items.length === " " ? ( <h3>Cargando...</h3>) 
+        : this.state.tipo === "tv" ? (
+          this.state.items.map((serie) => ( <CardSerie key={serie.id} serie={serie} /> ))) 
+            : (this.state.items.map((movie) => (<CardMovie key={movie.id} movie={movie} /> ))
+        )}
+      </div>
+    </main>
+  );
 }
+};
 
 export default Results;
 

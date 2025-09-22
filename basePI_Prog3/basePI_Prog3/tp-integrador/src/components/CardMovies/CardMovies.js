@@ -8,8 +8,7 @@ class CardMovies extends Component {
       topMovies: [],
       valor: "",
       topMoviesFiltradas: [],
-      next: 1,
-      loading: true
+      next: 1
     };
   }
 
@@ -26,8 +25,8 @@ class CardMovies extends Component {
       this.setState({ topMoviesFiltradas: this.state.topMovies });
       return;
     }
-    const arrayPeliculas = this.state.topMovies.filter((e) =>
-      e.title && e.title.toLowerCase().includes(texto.toLowerCase())
+    let arrayPeliculas = this.state.topMovies.filter((event) =>
+      event.title && event.title.toLowerCase().includes(texto.toLowerCase())
     );
     this.setState({ topMoviesFiltradas: arrayPeliculas });
   }
@@ -39,11 +38,10 @@ class CardMovies extends Component {
         this.setState({
           topMovies: data.results,
           topMoviesFiltradas: data.results,
-          next: data.page + 1,
-          loading: false
+          next: data.page + 1
         });
       })
-      .catch((error) => console.log(error)); this.setState({ loading: false });
+      .catch((error) => console.log(error));
   }
 
   cargarMas() {
@@ -53,34 +51,33 @@ class CardMovies extends Component {
         this.setState({
           topMovies: this.state.topMovies.concat(data.results),
           topMoviesFiltradas: this.state.topMoviesFiltradas.concat(data.results),
-          next: data.page + 1,
-          loading: false
+          next: data.page + 1
         });
       })
       .catch((error) => console.log(error));
   }
 
   render() {
-  if (this.state.loading) {
-      return <p>Cargando...</p>;
-    }
     return (
       <main className="seccion">
-        <form className="search-form buscador-form" onSubmit={(e) => this.evitarSubmit(e)}>
+        <form className="search-form buscador-form" onSubmit={(event) => this.evitarSubmit(event)}>
           <input
             className="buscador-input"
             type="text"
             placeholder="Buscar..."
-            onChange={(e) => this.controlarCambios(e)}
+            onChange={(event) => this.controlarCambios(event)}
           />
         </form>
 
         <h2 className="seccion-titulo">Todas las peliculas</h2>
         <div className="cards grupo listado-cards">
-          {this.state.topMoviesFiltradas &&
+          {this.state.topMovies.length === 0 ? (
+            <h3>Cargando...</h3>
+          ) : (
             this.state.topMoviesFiltradas.map((movie) => (
               <CardMovie key={movie.id} movie={movie} />
-            ))}
+            ))
+          )}
         </div>
 
         <div className="seccion acciones-listado">

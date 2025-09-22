@@ -6,12 +6,7 @@ function Movie() {
   return (
     <div className="container">
       <h1>UdeSA Movies</h1>
-
-      {/* Menu */}
-      <nav>
-        <Headers/>
       
-      </nav>
     <DetalleMovie/>
     </div>
   );

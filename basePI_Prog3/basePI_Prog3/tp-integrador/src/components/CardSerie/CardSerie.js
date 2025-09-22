@@ -37,23 +37,21 @@ class CardSerie extends Component {
   }
 
   render() {
-    const { serie } = this.props;
-
     return (
       <div className="card">
         <div className="cardd">
           <img
             className="card-img"
-            src={"https://image.tmdb.org/t/p/w200" + serie.poster_path}
-            alt={serie.name}
+            src={"https://image.tmdb.org/t/p/w200" + this.props.serie.poster_path}
+            alt={this.props.serie.name}
           />
         </div>
 
         <div className="card-overlay">
-          <h3 className="card-titulo">{serie.name}</h3>
+          <h3 className="card-titulo">{this.props.serie.name}</h3>
 
           <div className="cardactiva">
-            <Link to={`/serie/${serie.id}`} className="boton boton-detalle">
+            <Link to={`/serie/${this.props.serie.id}`} className="boton boton-detalle">
               Ir a detalle
             </Link>
 
@@ -67,7 +65,7 @@ class CardSerie extends Component {
           </div>
 
           {this.state.verDescripcion ? (
-            <p className="card-descripcion">{serie.overview}</p>
+            <p className="card-descripcion">{this.props.serie.overview}</p>
           ) : null}
         </div>
       </div>

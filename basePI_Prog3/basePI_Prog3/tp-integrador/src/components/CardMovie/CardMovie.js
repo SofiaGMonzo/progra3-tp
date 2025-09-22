@@ -35,23 +35,22 @@ class CardMovie extends Component {
 
 
   render() {
-    const { movie } = this.props;
 
     return (
       <div className="card">
         <div className="cardd">
           <img
             className="card-img"
-            src={"https://image.tmdb.org/t/p/w200" + movie.poster_path}
-            alt={movie.title}
+            src={"https://image.tmdb.org/t/p/w200" + this.props.movie.poster_path}
+            alt={this.props.movie.title}
           />
         </div>
 
         <div className="card-overlay">
-          <h3 className="card-titulo">{movie.title}</h3>
+          <h3 className="card-titulo">{this.props.movie.title}</h3>
 
           <div className="cardactiva">
-            <Link to={`/movie/${movie.id}`} className="boton boton-detalle">
+            <Link to={`/movie/${this.props.movie.id}`} className="boton boton-detalle">
               Ir a detalle
             </Link>
 
@@ -65,7 +64,7 @@ class CardMovie extends Component {
           </div>
 
           {this.state.verDescripcion ? (
-            <p className="card-descripcion">{movie.overview}</p>
+            <p className="card-descripcion">{this.props.movie.overview}</p>
           ) : null}
         </div>
       </div>

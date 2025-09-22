@@ -5,7 +5,7 @@ import CardMovies from "../../components/CardMovies/CardMovies";
 
 function Movies() {
   return (
-    <div className="container">
+    <div>
 
       <CardMovies/>
     

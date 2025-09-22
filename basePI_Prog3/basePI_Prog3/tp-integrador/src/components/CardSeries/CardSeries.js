@@ -8,18 +8,23 @@ class CardSeries extends Component {
       topSeries: [],
       valor: "",
       topSeriesFiltradas: [],
-      next: 1,
-      loading: true
+      next: 1
     };
   }
 
-  evitarSubmit(event) { event.preventDefault(); }
+  evitarSubmit(event) { 
+    event.preventDefault(); 
+  }
 
   controlarCambios(event) {
     this.setState({ valor: event.target.value }, () => this.filtro(this.state.valor));
   }
 
   filtro(texto) {
+    if (texto === "") {
+      this.setState({ topSeriesFiltradas: this.state.topSeries });
+      return;
+    }
     const arraySeries = this.state.topSeries.filter(
       (e) => e.name && e.name.toLowerCase().includes(texto.toLowerCase())
     );
@@ -33,12 +38,10 @@ class CardSeries extends Component {
         this.setState({
           topSeries: data.results,
           topSeriesFiltradas: data.results,
-          next: data.page + 1,
-          loading: false
+          next: data.page + 1
         });
       })
       .catch((error) => console.log(error));
-      this.setState({ loading: false })
   }
 
   cargarMas() {
@@ -55,9 +58,6 @@ class CardSeries extends Component {
   }
 
   render() {
-    if (this.state.loading) {
-      return <p>Cargando...</p>;
-    }
     return (
       <main className="seccion">
         <form className="search-form buscador-form" onSubmit={(e) => this.evitarSubmit(e)}>
@@ -71,13 +71,17 @@ class CardSeries extends Component {
 
         <h2 className="seccion-titulo">Todas las series</h2>
         <div className="cards grupo listado-cards">
-          {this.state.topSeriesFiltradas.map((serie) => (
-            <CardSerie key={serie.id} serie={serie} />
-          ))}
+          {this.state.topSeriesFiltradas.length === 0 ? (
+            <h3>Cargando...</h3>) 
+            : (this.state.topSeriesFiltradas.map((serie) => (<CardSerie key={serie.id} serie={serie} />))
+          )}
         </div>
 
         <div className="seccion acciones-listado">
-          <button onClick={() => this.cargarMas()} className="boton boton-info boton-cargar">
+          <button 
+            onClick={() => this.cargarMas()} 
+            className="boton boton-info boton-cargar"
+          >
             Cargar más
           </button>
         </div>

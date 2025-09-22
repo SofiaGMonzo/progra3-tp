@@ -4,7 +4,7 @@ import CardSeries from "../../components/CardSeries/CardSeries";
 
 function Series() {
   return (
-    <div className="container">
+    <div >
   
       <CardSeries/>
 

@@ -23,8 +23,6 @@ class Buscador extends Component {
   }
 
   render() {
-    const ruta = "/results/" + this.state.tipo + "/" + this.state.q;
-
     return (
       <form onSubmit={(event) => this.evitarSubmit(event)}>
         <div className="buscador-radio">
@@ -60,7 +58,7 @@ class Buscador extends Component {
           />
 
           <Link
-            to={ruta}
+            to={"/results/" + this.state.tipo + "/" + this.state.q}
             className="boton"
             onClick={(e) => { if (this.state.q === "") { e.preventDefault(); } }}
           >

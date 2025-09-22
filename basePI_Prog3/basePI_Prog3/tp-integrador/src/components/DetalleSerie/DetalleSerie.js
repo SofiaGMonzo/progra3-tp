@@ -6,8 +6,7 @@ class DetalleSerie extends Component {
     super(props);
     this.state = {
       serie: {},
-      esFavorito: false,
-      loading: true
+      esFavorito: false
     };
   }
 
@@ -18,91 +17,81 @@ class DetalleSerie extends Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        const guardado = localStorage.getItem("favSeries");
         let arrayFavs = [];
-        if (guardado !== null) {
-          arrayFavs = JSON.parse(guardado);
+        if (localStorage.getItem("favSeries") !== null) {
+          arrayFavs = JSON.parse(localStorage.getItem("favSeries"));
         }
         this.setState({
           serie: data,
-          esFavorito: arrayFavs.includes(data.id),
-          loading: false
+          esFavorito: arrayFavs.includes(data.id)
         });
       })
-       .catch((error) => console.log(error)); 
-      this.setState({ loading: false });
+      .catch((error) => console.log(error));
   }
 
   manejarFavorito() {
-    let clave = "favSeries";
-    let idActual = this.state.serie.id;
-    let guardado = localStorage.getItem(clave);
     let arrayFavs = [];
-    if (guardado !== null) {
-      arrayFavs = JSON.parse(guardado);
+    if (localStorage.getItem("favSeries") !== null) {
+      arrayFavs = JSON.parse(localStorage.getItem("favSeries"));
     }
 
-    if (arrayFavs.includes(idActual)) {
-      arrayFavs = arrayFavs.filter((id) => id !== idActual);
+    if (arrayFavs.includes(this.state.serie.id)) {
+      arrayFavs = arrayFavs.filter((id) => id !== this.state.serie.id);
       this.setState({ esFavorito: false });
     } else {
-      arrayFavs.push(idActual);
+      arrayFavs.push(this.state.serie.id);
       this.setState({ esFavorito: true });
     }
 
-    let actualizado = JSON.stringify(arrayFavs);
-    localStorage.setItem(clave, actualizado);
+    localStorage.setItem("favSeries", JSON.stringify(arrayFavs));
   }
 
   render() {
-    if (this.state.loading) {
-      return <p>Cargando...</p>;
-    }
-    let serie = this.state.serie;
-    let esFavorito = this.state.esFavorito;
-
-    let poster = "https://image.tmdb.org/t/p/w300" + serie.poster_path;
-    let titulo = serie.name;
-    let rating = serie.vote_average;
-    let fecha = serie.first_air_date;
-    let sinopsis = serie.overview;
-    let generos = serie.genres;
-
     return (
-      <div className="detalle">
-        <div className="detalle-header">
-          <img src={poster} alt={titulo} className="detalle-poster" />
-          <div className="detalle-info">
-            <h1 className="detalle-titulo">{titulo}</h1>
-            <p className="detalle-rating">Calificación: {rating}</p>
-            <p className="detalle-fecha">Fecha de estreno: {fecha}</p>
+      this.state.serie.id === " " ? (
+        <h3>Cargando...</h3>
+      ) : (
+        <div className="detalle">
+          <div className="detalle-header">
+            <img
+              src={"https://image.tmdb.org/t/p/w300" + this.state.serie.poster_path}
+              alt={this.state.serie.name}
+              className="detalle-poster"
+            />
+            <div className="detalle-info">
+              <h1 className="detalle-titulo">{this.state.serie.name}</h1>
+              <p className="detalle-rating">Calificación: {this.state.serie.vote_average}</p>
+              <p className="detalle-fecha">Fecha de estreno: {this.state.serie.first_air_date}</p>
+            </div>
+          </div>
+
+          <div className="detalle-body">
+            <p className="detalle-sinopsis">{this.state.serie.overview}</p>
+            <div className="detalle-generos">
+              <p>Género:</p>
+              <ul className="lista-generos">
+                {this.state.serie.genres &&
+                  this.state.serie.genres.map((genero) => (
+                    <li key={genero.id} className="genero-item">
+                      {genero.name}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="detalle-actions">
+            <button
+              onClick={() => this.manejarFavorito()}
+              className="btn-favorito"
+            >
+              {this.state.esFavorito
+                ? "☆ Quitar de favoritos"
+                : "✮⋆˙ Agregar a favoritos"}
+            </button>
           </div>
         </div>
-
-        <div className="detalle-body">
-          <p className="detalle-sinopsis">{sinopsis}</p>
-          <div className="detalle-generos">
-            <p>Género:</p>
-            <ul className="lista-generos">
-              {generos &&
-                generos.map((genero) => (
-                  <li key={genero.id} className="genero-item">
-                    {genero.name}
-                  </li>
-                ))}
-            </ul>
-          </div>
-        </div>
-
-        <div className="detalle-actions">
-          <button
-            onClick={() => this.manejarFavorito()}
-            className="btn-favorito"
-          >
-            {esFavorito ? "☆ Quitar de favoritos" : "✮⋆˙ Agregar a favoritos"}
-          </button>
-        </div>
-      </div>
+      )
     );
   }
 }
