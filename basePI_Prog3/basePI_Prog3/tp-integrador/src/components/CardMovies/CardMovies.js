@@ -13,10 +13,12 @@ class CardMovies extends Component {
     };
   }
 
-  evitarSubmit(event) { event.preventDefault(); }
+  evitarSubmit(event) { 
+    event.preventDefault(); }
 
   controlarCambios(event) {
-    this.setState({ valor: event.target.value }, () => this.filtro(this.state.valor));
+    this.setState({ valor: event.target.value }, 
+      () => this.filtro(this.state.valor));
   }
 
   filtro(texto) {

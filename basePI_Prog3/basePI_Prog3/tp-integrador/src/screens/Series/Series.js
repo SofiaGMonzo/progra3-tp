@@ -5,11 +5,7 @@ import CardSeries from "../../components/CardSeries/CardSeries";
 function Series() {
   return (
     <div className="container">
-      <nav>
-        <Headers/>
-      </nav>
-    
-      
+  
       <CardSeries/>
 
     </div>

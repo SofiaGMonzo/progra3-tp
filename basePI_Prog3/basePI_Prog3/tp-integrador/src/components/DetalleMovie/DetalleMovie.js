@@ -13,12 +13,10 @@ class DetalleMovie extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    fetch(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`
-    )
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`)
       .then((res) => res.json())
       .then((data) => {
-        const guardado = localStorage.getItem("favMovies");
+        let guardado = localStorage.getItem("favMovies");
         let arrayFavs = [];
         if (guardado !== null) {
           arrayFavs = JSON.parse(guardado);
@@ -34,9 +32,9 @@ class DetalleMovie extends Component {
   }
 
   manejarFavorito() {
-    const clave = "favMovies";
-    const idActual = this.state.movie.id;
-    const guardado = localStorage.getItem(clave);
+    let clave = "favMovies";
+    let idActual = this.state.movie.id;
+    let guardado = localStorage.getItem(clave);
     let arrayFavs = [];
     if (guardado !== null) {
       arrayFavs = JSON.parse(guardado);
@@ -50,7 +48,7 @@ class DetalleMovie extends Component {
       this.setState({ esFavorito: true });
     }
 
-    const actualizado = JSON.stringify(arrayFavs);
+    let actualizado = JSON.stringify(arrayFavs);
     localStorage.setItem(clave, actualizado);
   }
 
@@ -58,16 +56,16 @@ class DetalleMovie extends Component {
     if (this.state.loading) {
       return <p>Cargando...</p>;
     }
-    const movie = this.state.movie;
-    const esFavorito = this.state.esFavorito;
+    let movie = this.state.movie;
+    let esFavorito = this.state.esFavorito;
 
-    const poster = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
-    const titulo = movie.title;
-    const rating = movie.vote_average;
-    const fecha = movie.release_date;
-    const duracion = movie.runtime;
-    const sinopsis = movie.overview;
-    const generos = movie.genres;
+    let poster = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
+    let titulo = movie.title;
+    let rating = movie.vote_average;
+    let fecha = movie.release_date;
+    let duracion = movie.runtime;
+    let sinopsis = movie.overview;
+    let generos = movie.genres;
 
     return (
       <div className="detalle">

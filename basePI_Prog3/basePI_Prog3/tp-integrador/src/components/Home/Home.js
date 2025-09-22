@@ -66,9 +66,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch(
-      "https://api.themoviedb.org/3/movie/top_rated?api_key=e017b082fb716585e3bd1e8377157925"
-    )
+    fetch("https://api.themoviedb.org/3/movie/top_rated?api_key=e017b082fb716585e3bd1e8377157925")
       .then((res) => res.json())
       .then((data) => {
         this.setState({

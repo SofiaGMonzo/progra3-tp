@@ -34,9 +34,9 @@ class DetalleSerie extends Component {
   }
 
   manejarFavorito() {
-    const clave = "favSeries";
-    const idActual = this.state.serie.id;
-    const guardado = localStorage.getItem(clave);
+    let clave = "favSeries";
+    let idActual = this.state.serie.id;
+    let guardado = localStorage.getItem(clave);
     let arrayFavs = [];
     if (guardado !== null) {
       arrayFavs = JSON.parse(guardado);
@@ -50,7 +50,7 @@ class DetalleSerie extends Component {
       this.setState({ esFavorito: true });
     }
 
-    const actualizado = JSON.stringify(arrayFavs);
+    let actualizado = JSON.stringify(arrayFavs);
     localStorage.setItem(clave, actualizado);
   }
 
@@ -58,15 +58,15 @@ class DetalleSerie extends Component {
     if (this.state.loading) {
       return <p>Cargando...</p>;
     }
-    const serie = this.state.serie;
-    const esFavorito = this.state.esFavorito;
+    let serie = this.state.serie;
+    let esFavorito = this.state.esFavorito;
 
-    const poster = "https://image.tmdb.org/t/p/w300" + serie.poster_path;
-    const titulo = serie.name;
-    const rating = serie.vote_average;
-    const fecha = serie.first_air_date;
-    const sinopsis = serie.overview;
-    const generos = serie.genres;
+    let poster = "https://image.tmdb.org/t/p/w300" + serie.poster_path;
+    let titulo = serie.name;
+    let rating = serie.vote_average;
+    let fecha = serie.first_air_date;
+    let sinopsis = serie.overview;
+    let generos = serie.genres;
 
     return (
       <div className="detalle">

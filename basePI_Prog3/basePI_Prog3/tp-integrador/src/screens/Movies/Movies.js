@@ -7,12 +7,6 @@ function Movies() {
   return (
     <div className="container">
 
-      {/* Menu */}
-      <nav>
-        <Headers/>
-      </nav>
-    
-
       <CardMovies/>
     
     </div>

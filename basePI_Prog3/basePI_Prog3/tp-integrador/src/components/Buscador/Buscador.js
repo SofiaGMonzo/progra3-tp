@@ -1,22 +1,17 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 class Buscador extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      q: "",
-      tipo: "movie"
+    this.state = { 
+        q: "", 
+        tipo: "movie" 
     };
   }
 
   evitarSubmit(event) {
     event.preventDefault();
-    let q = this.state.q;
-    let tipo = this.state.tipo;
-    if (q === "") return;
-    this.props.history.push("/results/" + tipo + "/" + q);
   }
 
   controlarCambios(event) {
@@ -28,6 +23,8 @@ class Buscador extends Component {
   }
 
   render() {
+    const ruta = "/results/" + this.state.tipo + "/" + this.state.q;
+
     return (
       <form onSubmit={(event) => this.evitarSubmit(event)}>
         <div className="buscador-radio">
@@ -57,20 +54,22 @@ class Buscador extends Component {
           <input
             type="text"
             name="searchData"
-            placeholder={
-              this.state.tipo === "movie"
-                ? "Buscar películas..."
-                : "Buscar series..."
-            }
+            placeholder={this.state.tipo === "movie" ? "Buscar películas..." : "Buscar series..."}
             value={this.state.q}
             onChange={(event) => this.controlarCambios(event)}
           />
-          <button type="submit" className="boton">Buscar</button>
-        
+
+          <Link
+            to={ruta}
+            className="boton"
+            onClick={(e) => { if (this.state.q === "") { e.preventDefault(); } }}
+          >
+            Buscar
+          </Link>
         </div>
       </form>
     );
   }
 }
 
-export default withRouter(Buscador);
+export default Buscador;

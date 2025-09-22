@@ -12,8 +12,8 @@ class Favorites extends Component {
   }
 
   componentDidMount() {
-    const guardadoMovies = localStorage.getItem("favMovies");
-    const guardadoSeries = localStorage.getItem("favSeries");
+    let guardadoMovies = localStorage.getItem("favMovies");
+    let guardadoSeries = localStorage.getItem("favSeries");
 
     let favMoviesIds = guardadoMovies ? JSON.parse(guardadoMovies) : [];
     let favSeriesIds = guardadoSeries ? JSON.parse(guardadoSeries) : [];
