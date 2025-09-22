@@ -18,7 +18,10 @@ class Results extends Component {
     const tipo = this.props.match.params.tipo; 
     const q = this.props.match.params.q;
 
-    this.setState({ tipo: tipo, q: q, loading: true });
+    this.setState({ 
+      tipo: tipo, 
+      q: q, 
+      loading: true });
 
     let endpoint = "";
     if (tipo === "tv") {
@@ -28,7 +31,6 @@ class Results extends Component {
       endpoint = "movie";
     }
 
-
     fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + q)
       .then(res => res.json())
       .then(data => {
@@ -36,12 +38,49 @@ class Results extends Component {
         if (data && data.results) {
           resultados = data.results;
         }
-        this.setState({ items: resultados, loading: false });
+        this.setState({ 
+          items: resultados, 
+          loading: false });
       })
       .catch(error => {
         console.log(error);
         this.setState({ loading: false });
       });
+  }
+
+  componentDidUpdate(anteriores) {
+    const tipo = this.props.match.params.tipo;
+    const q = this.props.match.params.q;
+    const tipo2 = anteriores.match.params.tipo;
+    const q2 = anteriores.match.params.q;
+
+    if (tipo === tipo2 ? q !== q2 : true) {
+      this.setState({ tipo: tipo, q: q, loading: true });
+
+      let endpoint = "";
+      if (tipo === "tv") {
+        endpoint = "tv";
+      }
+      if (tipo === "movie") {
+        endpoint = "movie";
+      }
+
+      fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" +q)
+        .then((res) => res.json())
+        .then((data) => {
+          let resultados = [];
+          if (data && data.results) {
+            resultados = data.results;
+          }
+          this.setState({ 
+            items: resultados, 
+            loading: false });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({ loading: false });
+        });
+    }
   }
 
   render() {
@@ -50,10 +89,7 @@ class Results extends Component {
     }
 
     let queEs = this.state.tipo === "tv";
-    let tituloPagina = "Resultados de películas";
-    if (queEs) {
-      tituloPagina = "Resultados de series";
-    }
+    let tituloPagina = queEs ? "Resultados de series" : "Resultados de películas";
 
     let q = this.state.q;
     let items = this.state.items;
@@ -67,7 +103,6 @@ class Results extends Component {
             : items.map(movie => <CardMovie key={movie.id} movie={movie} />)}
         </div>
       </main>
-       
     );
   }
 }
