@@ -10,8 +10,10 @@ class DetalleMovie extends Component {
     };
   }
 
+
   componentDidMount() {
-    fetch(`https://api.themoviedb.org/3/movie/${this.props.match.params.id}?api_key=e017b082fb716585e3bd1e8377157925`)
+    let id = this.props.match.params.id;
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=e017b082fb716585e3bd1e8377157925`)
       .then((res) => res.json())
       .then((data) => {
         let arrayFavs = [];
@@ -20,7 +22,7 @@ class DetalleMovie extends Component {
         }
         this.setState({
           movie: data,
-          esFavorito: arrayFavs.includes(data.this.props.match.params.id)
+          esFavorito: arrayFavs.includes(data.id)
         });
       })
       .catch((error) => console.log(error));

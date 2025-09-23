@@ -11,8 +11,9 @@ class DetalleSerie extends Component {
   }
 
   componentDidMount() {
+    let id = this.props.match.params.id;
     fetch(
-      `https://api.themoviedb.org/3/tv/${this.props.match.params.id}?api_key=e017b082fb716585e3bd1e8377157925`
+      `https://api.themoviedb.org/3/tv/${id}?api_key=e017b082fb716585e3bd1e8377157925`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -22,7 +23,7 @@ class DetalleSerie extends Component {
         }
         this.setState({
           serie: data,
-          esFavorito: arrayFavs.includes(data.this.props.match.params.id)
+          esFavorito: arrayFavs.includes(data.id)
         });
       })
       .catch((error) => console.log(error));

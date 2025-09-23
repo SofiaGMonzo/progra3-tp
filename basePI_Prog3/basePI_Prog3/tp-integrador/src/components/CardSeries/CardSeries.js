@@ -80,7 +80,7 @@ class CardSeries extends Component {
         <div className="seccion acciones-listado">
           <button 
             onClick={() => this.cargarMas()} 
-            className="boton boton-info boton-cargar"
+            className="boton"
           >
             Cargar más
           </button>
