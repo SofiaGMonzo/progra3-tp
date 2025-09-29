@@ -23,12 +23,8 @@ class CardMovies extends Component {
   }
 
   filtro(texto) {
-    if (texto === "") {
-      this.setState({ topMoviesFiltradas: this.state.topMovies });
-      return;
-    }
     const arrayMovies = this.state.topMovies.filter(
-      (e) => e.title && e.title.toLowerCase().includes(texto.toLowerCase())
+      (e) => e.title.toLowerCase().includes(texto.toLowerCase())
     );
     this.setState({ topMoviesFiltradas: arrayMovies });
   }

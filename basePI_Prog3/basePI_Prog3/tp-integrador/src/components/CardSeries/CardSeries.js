@@ -21,12 +21,8 @@ class CardSeries extends Component {
   }
 
   filtro(texto) {
-    if (texto === "") {
-      this.setState({ topSeriesFiltradas: this.state.topSeries });
-      return;
-    }
-    const arraySeries = this.state.topSeries.filter(
-      (e) => e.name && e.name.toLowerCase().includes(texto.toLowerCase())
+   const arraySeries = this.state.topSeries.filter(
+      (e) => e.name.toLowerCase().includes(texto.toLowerCase())
     );
     this.setState({ topSeriesFiltradas: arraySeries });
   }

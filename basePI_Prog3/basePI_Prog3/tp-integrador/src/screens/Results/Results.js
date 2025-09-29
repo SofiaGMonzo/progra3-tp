@@ -30,10 +30,8 @@ class Results extends Component {
     fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + this.props.match.params.q)
       .then(res => res.json())
       .then(data => {
-        let resultados = [];
-        if (data && data.results) {
-          resultados = data.results;
-        }
+        let resultados = data.results;
+        
         this.setState({ 
           items: resultados
          });
@@ -49,21 +47,13 @@ class Results extends Component {
         q: this.props.match.params.q 
       });
 
-      let endpoint = "";
-      if (this.props.match.params.tipo === "tv") {
-        endpoint = "tv";
-      }
-      if (this.props.match.params.tipo === "movie") {
-        endpoint = "movie";
-      }
+    
 
-      fetch("https://api.themoviedb.org/3/search/" + endpoint + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + this.props.match.params.q)
+      fetch("https://api.themoviedb.org/3/search/" + this.props.match.params.tipo + "?api_key=e017b082fb716585e3bd1e8377157925&query=" + this.props.match.params.q)
         .then((res) => res.json())
         .then((data) => {
-          let resultados = [];
-          if (data && data.results) {
-            resultados = data.results;
-          }
+          let resultados = data.results;
+          
           this.setState({ 
             items: resultados});
         })
@@ -75,9 +65,7 @@ render() {
   return (
     <main>
       <h2>
-        {this.state.tipo === "tv"
-          ? "Resultados de series"
-          : "Resultados de películas"}: “{this.state.q}”
+        {this.state.tipo === "tv" ? "Resultados de series" : "Resultados de películas"}
       </h2>
 
       <div className="listado-cards">

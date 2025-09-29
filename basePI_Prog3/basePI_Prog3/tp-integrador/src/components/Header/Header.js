@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Header({ ruta, nombre }) {
+function Header(props) {
   return (
     <li className="objeto-item">
-      <Link to={ruta} className="objeto-link">
-        {nombre}
+      <Link to={props.ruta} className="objeto-link">
+        {props.nombre}
       </Link>
     </li>
   );

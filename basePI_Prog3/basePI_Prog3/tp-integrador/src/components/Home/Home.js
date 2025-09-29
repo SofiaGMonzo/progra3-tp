@@ -45,16 +45,14 @@ class Home extends Component {
   }
 
   render() {
-    const { topMovies, topSeries, popularMovies, popularSeries } = this.state;
-
     return (
       <main>
         <h2>Películas top rated</h2>
         <div className="listado-cards">
-          {topMovies.length === 0 ? (
+          {this.state.topMovies.length === 0 ? (
             <h3>Cargando...</h3>
           ) : (
-            topMovies.map((movie, idx) =>
+            this.state.topMovies.map((movie, idx) =>
               idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
             )
           )}
@@ -62,10 +60,10 @@ class Home extends Component {
 
         <h2>Películas populares</h2>
         <div className="listado-cards">
-          {popularMovies.length === 0 ? (
+          {this.state.popularMovies.length === 0 ? (
             <h3>Cargando...</h3>
           ) : (
-            popularMovies.map((movie, idx) =>
+            this.state.popularMovies.map((movie, idx) =>
               idx < 4 ? <CardMovie key={movie.id} movie={movie} /> : null
             )
           )}
@@ -74,10 +72,10 @@ class Home extends Component {
 
         <h2>Series top rated</h2>
         <div className="listado-cards">
-          {topSeries.length === 0 ? (
+          {this.state.topSeries.length === 0 ? (
             <h3>Cargando...</h3>
           ) : (
-            topSeries.map((serie, idx) =>
+            this.state.topSeries.map((serie, idx) =>
               idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
             )
           )}
@@ -85,10 +83,10 @@ class Home extends Component {
 
         <h2>Series populares</h2>
         <div className="listado-cards">
-          {popularSeries.length === 0 ? (
+          {this.state.popularSeries.length === 0 ? (
             <h3>Cargando...</h3>
           ) : (
-            popularSeries.map((serie, idx) =>
+            this.state.popularSeries.map((serie, idx) =>
               idx < 4 ? <CardSerie key={serie.id} serie={serie} /> : null
             )
           )}
